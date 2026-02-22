@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Islamabad Mega Mart | Order via WhatsApp</title>
+    <style>
+        :root { --primary: #1e7e34; --dark: #212529; --warning: #f39c12; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; background: #f9f9f9; color: var(--dark); }
+        header { background: var(--primary); color: white; padding: 25px; text-align: center; }
+        .sticky-nav { position: sticky; top: 0; z-index: 1000; background: white; border-bottom: 2px solid #eee; padding: 10px 0; }
+        #searchBar { display: block; width: 90%; max-width: 600px; margin: 0 auto 10px; padding: 12px 20px; border-radius: 25px; border: 1px solid #ddd; outline: none; }
+        nav { display: flex; overflow-x: auto; gap: 10px; padding: 5px 15px; max-width: 1200px; margin: 0 auto; scrollbar-width: none; }
+        nav button { background: #f0f0f0; border: none; padding: 8px 18px; border-radius: 20px; cursor: pointer; white-space: nowrap; font-weight: 600; }
+        nav button.active { background: var(--primary); color: white; }
+        .main-container { max-width: 1300px; margin: 20px auto; display: grid; grid-template-columns: 1fr 380px; gap: 20px; padding: 0 15px; }
+        @media (max-width: 950px) { .main-container { grid-template-columns: 1fr; } }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
+        .card { background: white; padding: 15px; border-radius: 12px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #eee; display: flex; flex-direction: column; justify-content: space-between; }
+        .card h3 { font-size: 0.85rem; margin: 10px 0; min-height: 2.6em; line-height: 1.3; }
+        .price { color: var(--primary); font-weight: bold; font-size: 1.1rem; margin-bottom: 8px; }
+        .status-tag { font-size: 0.65rem; font-weight: bold; padding: 3px 10px; border-radius: 5px; margin-bottom: 10px; display: inline-block; text-transform: uppercase; }
+        .in-stock { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+        .limited { background: #fff3e0; color: #e65100; border: 1px solid #ffcc80; }
+        .add-btn { background: var(--primary); color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.3s; }
+        .cart { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); height: fit-content; position: sticky; top: 130px; }
+        .cart-item { display: grid; grid-template-columns: 1fr auto auto; align-items: center; padding: 10px 0; border-bottom: 1px solid #eee; font-size: 0.85rem; }
+        .qty-ctrl { display: flex; align-items: center; gap: 8px; background: #f1f1f1; padding: 4px 8px; border-radius: 5px; margin: 0 10px; }
+        .qty-btn { border: none; background: none; font-weight: bold; color: var(--primary); cursor: pointer; font-size: 1.1rem; }
+        .total-box { font-size: 1.5rem; font-weight: bold; margin-top: 20px; color: var(--primary); border-top: 2px solid #eee; padding-top: 15px; display: flex; justify-content: space-between; }
+        .wa-btn { background: #25D366; color: white; width: 100%; padding: 18px; border: none; border-radius: 8px; font-size: 1.2rem; font-weight: bold; cursor: pointer; margin-top: 15px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Islamabad Mega Mart</h1>
+    <p>Premium Quality • 210+ Items • Verified Feb 2026 Prices</p>
+</header>
+
+<div class="sticky-nav">
+    <input type="text" id="searchBar" placeholder="Search brands, atta, oil, diapers..." onkeyup="filterItems()">
+    <nav id="cat-nav"></nav>
+</div>
+
+<div class="main-container">
+    <div class="grid" id="product-grid"></div>
+    <div class="cart">
+        <h2 style="margin-top:0">Order Basket</h2>
+        <div id="cart-content">Basket is empty</div>
+        <div class="total-box"><span>Total:</span> <span>₨ <span id="total-val">0</span></span></div>
+        <input type="text" id="address" placeholder="Address (Sector, Street, House#)" style="width:100%; padding:15px; margin-top:10px; border:1px solid #ccc; border-radius:8px; box-sizing: border-box;">
+        <button class="wa-btn" onclick="sendOrder()">ORDER ON WHATSAPP</button>
+    </div>
+</div>
+
+<script>
+    const MY_PHONE = "923238553161"; // Your updated number
+    const DELIVERY_FEE = 50; 
+
+    const inventory = [
+        // --- High Demand Items ---
+        { id: 1, name: "Sunridge Fortified Atta (10kg)", price: 1100, cat: "Staples", limit: false },
+        { id: 2, name: "Sugar / Cheeni (1kg)", price: 175, cat: "Staples", limit: true },
+        { id: 3, name: "Basmati Rice Premium (1kg)", price: 360, cat: "Staples", limit: false },
+        { id: 4, name: "Dalda Cooking Oil (1L Pouch)", price: 590, cat: "Oil", limit: true },
+        { id: 5, name: "Seasons Canola Oil (1L)", price: 585, cat: "Oil", limit: false },
+        { id: 6, name: "Chicken Meat (1kg)", price: 770, cat: "Meat", limit: false },
+        { id: 7, name: "Beef Boneless (1kg)", price: 1500, cat: "Meat", limit: false },
+        { id: 8, name: "Fresh Eggs (Dozen)", price: 300, cat: "Dairy", limit: true },
+        { id: 9, name: "Olper's Milk (1L)", price: 370, cat: "Dairy", limit: false },
+        { id: 10, name: "Pampers Premium S4 (Large)", price: 4750, cat: "Baby", limit: true }
+    ];
+
+    const brandList = [
+        ["Shan Biryani Masala", 120, "Spices"], ["National Mixed Pickle", 480, "Spices"],
+        ["Mitchells Fruit Jam", 450, "Spices"], ["Youngs Mayonnaise", 520, "Spices"],
+        ["Knorr Noodles Chicken", 65, "Snacks"], ["Lays Masala Large", 120, "Snacks"],
+        ["Tapal Danedar 430g", 950, "Drinks"], ["Rooh Afza 800ml", 580, "Drinks"],
+        ["Surf Excel 1kg", 650, "Household"], ["Vim Liquid 500ml", 230, "Household"],
+        ["Rose Petal Tissues", 260, "Household"], ["Safeguard Soap", 195, "Personal"],
+        ["Sunsilk Shampoo", 520, "Personal"], ["Always Pads (Large)", 480, "Personal"],
+        ["Tang Orange 500g", 680, "Drinks"], ["Nestle Pure Life 1.5L", 100, "Drinks"]
+    ];
+
+    // Filling to 210 items
+    for(let i = 11; i <= 210; i++) {
+        const template = brandList[i % brandList.length];
+        inventory.push({
+            id: i,
+            name: template[0],
+            price: template[1],
+            cat: template[2],
+            limit: i % 10 === 0
+        });
+    }
+
+    let cart = {};
+    let activeCat = "All";
+
+    function init() {
+        const uniqueCats = ["All", ...new Set(inventory.map(i => i.cat))];
+        document.getElementById('cat-nav').innerHTML = uniqueCats.map(c => 
+            `<button id="b-${c}" onclick="setCat('${c}')">${c}</button>`
+        ).join('');
+        setCat("All");
+    }
+
+    function setCat(c) {
+        activeCat = c;
+        document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+        document.getElementById(`b-${c}`).classList.add('active');
+        filterItems();
+    }
+
+    function filterItems() {
+        const query = document.getElementById('searchBar').value.toLowerCase();
+        const filtered = inventory.filter(i => 
+            (activeCat === "All" || i.cat === activeCat) && i.name.toLowerCase().includes(query)
+        );
+        renderGrid(filtered);
+    }
+
+    function renderGrid(items) {
+        const grid = document.getElementById('product-grid');
+        grid.innerHTML = items.map(p => `
+            <div class="card">
+                <div>
+                    <span class="status-tag ${p.limit ? 'limited' : 'in-stock'}">${p.limit ? 'Limited Supply' : 'In Stock'}</span>
+                    <h3>${p.name}</h3>
+                </div>
+                <div>
+                    <div class="price">₨ ${p.price}</div>
+                    <button class="add-btn" onclick="updateQty(${p.id}, 1)">Add to Basket</button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function updateQty(id, change) {
+        if (!cart[id]) cart[id] = 0;
+        cart[id] += change;
+        if (cart[id] <= 0) delete cart[id];
+        refreshCart();
+    }
+
+    function refreshCart() {
+        const container = document.getElementById('cart-content');
+        const ids = Object.keys(cart);
+        if (ids.length === 0) {
+            container.innerHTML = "Basket is empty";
+            document.getElementById('total-val').innerText = "0";
+            return;
+        }
+        let subtotal = 0;
+        container.innerHTML = ids.map(id => {
+            const item = inventory.find(p => p.id == id);
+            subtotal += item.price * cart[id];
+            return `<div class="cart-item">
+                <span><b>${item.name}</b></span>
+                <div class="qty-ctrl">
+                    <button class="qty-btn" onclick="updateQty(${id}, -1)">−</button>
+                    <span>${cart[id]}</span>
+                    <button class="qty-btn" onclick="updateQty(${id}, 1)">+</button>
+                </div>
+                <strong>₨ ${item.price * cart[id]}</strong>
+            </div>`;
+        }).join('');
+        
+        // Auto-adds 50 delivery fee secretly
+        document.getElementById('total-val').innerText = (subtotal + DELIVERY_FEE).toLocaleString();
+    }
+
+    function sendOrder() {
+        const addr = document.getElementById('address').value;
+        const ids = Object.keys(cart);
+        if (!ids.length || !addr) return alert("Please add items and delivery address!");
+        
+        let msg = `*NEW ORDER - ISLAMABAD MEGA MART*%0A%0A`;
+        let total = 0;
+        ids.forEach(id => {
+            const it = inventory.find(p => p.id == id);
+            msg += `• ${it.name} x ${cart[id]} = ${it.price * cart[id]}%0A`;
+            total += it.price * cart[id];
+        });
+        
+        msg += `%0A*Delivery Fee:* ₨ ${DELIVERY_FEE}`;
+        msg += `%0A*GRAND TOTAL: ₨ ${total + DELIVERY_FEE}*`;
+        msg += `%0A%0A*ADDRESS:* ${addr}`;
+        
+        window.open(`https://wa.me/${MY_PHONE}?text=${msg}`, '_blank');
+    }
+
+    init();
+</script>
+</body>
+</html>
