@@ -14,7 +14,8 @@
         nav button { background: #f0f0f0; border: none; padding: 8px 18px; border-radius: 20px; cursor: pointer; white-space: nowrap; font-weight: 600; }
         nav button.active { background: var(--primary); color: white; }
         .main-container { max-width: 1300px; margin: 20px auto; display: grid; grid-template-columns: 1fr 380px; gap: 20px; padding: 0 15px; }
-        @media (max-width: 950px) { .main-container { grid-template-columns: 1fr; } }
+        
+        /* Grid and Cards */
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
         .card { background: white; padding: 15px; border-radius: 12px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #eee; display: flex; flex-direction: column; justify-content: space-between; }
         .card h3 { font-size: 0.85rem; margin: 10px 0; min-height: 2.6em; line-height: 1.3; }
@@ -23,12 +24,28 @@
         .in-stock { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
         .limited { background: #fff3e0; color: #e65100; border: 1px solid #ffcc80; }
         .add-btn { background: var(--primary); color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.3s; }
+        
+        /* Cart Styles */
         .cart { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); height: fit-content; position: sticky; top: 130px; }
         .cart-item { display: grid; grid-template-columns: 1fr auto auto; align-items: center; padding: 10px 0; border-bottom: 1px solid #eee; font-size: 0.85rem; }
         .qty-ctrl { display: flex; align-items: center; gap: 8px; background: #f1f1f1; padding: 4px 8px; border-radius: 5px; margin: 0 10px; }
         .qty-btn { border: none; background: none; font-weight: bold; color: var(--primary); cursor: pointer; font-size: 1.1rem; }
         .total-box { font-size: 1.5rem; font-weight: bold; margin-top: 20px; color: var(--primary); border-top: 2px solid #eee; padding-top: 15px; display: flex; justify-content: space-between; }
         .wa-btn { background: #25D366; color: white; width: 100%; padding: 18px; border: none; border-radius: 8px; font-size: 1.2rem; font-weight: bold; cursor: pointer; margin-top: 15px; }
+
+        /* FAB Styles */
+        .fab-cart { position: fixed; bottom: 25px; right: 25px; background: var(--primary); color: white; width: 65px; height: 65px; border-radius: 50%; border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.3); cursor: pointer; z-index: 2000; font-size: 24px; display: none; align-items: center; justify-content: center; }
+        #cart-count { position: absolute; top: 5px; right: 5px; background: #ff4444; color: white; font-size: 0.7rem; padding: 3px 7px; border-radius: 10px; border: 2px solid white; }
+        .close-cart { display: none; width: 100%; padding: 10px; background: #eee; border: none; border-radius: 8px; margin-bottom: 15px; font-weight: bold; cursor: pointer; }
+
+        /* Mobile Adjustments */
+        @media (max-width: 950px) {
+            .main-container { grid-template-columns: 1fr; }
+            .fab-cart { display: flex; }
+            .cart { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 3000; border-radius: 0; box-sizing: border-box; overflow-y: auto; }
+            .cart.active { display: block; }
+            .close-cart { display: block; }
+        }
     </style>
 </head>
 <body>
@@ -45,7 +62,8 @@
 
 <div class="main-container">
     <div class="grid" id="product-grid"></div>
-    <div class="cart">
+    <div class="cart" id="cart-sidebar">
+        <button class="close-cart" onclick="toggleCart()">✕ CLOSE BASKET</button>
         <h2 style="margin-top:0">Order Basket</h2>
         <div id="cart-content">Basket is empty</div>
         <div class="total-box"><span>Total:</span> <span>₨ <span id="total-val">0</span></span></div>
@@ -54,24 +72,16 @@
     </div>
 </div>
 
+<button class="fab-cart" onclick="toggleCart()">
+    🛒
+    <span id="cart-count">0</span>
+</button>
+
 <script>
-    const MY_PHONE = "923238553161"; // Your updated number
+    const MY_PHONE = "923238553161";
     const DELIVERY_FEE = 50; 
 
-    const inventory = [
-        // --- High Demand Items ---
-        { id: 1, name: "Sunridge Fortified Atta (10kg)", price: 1100, cat: "Staples", limit: false },
-        { id: 2, name: "Sugar / Cheeni (1kg)", price: 175, cat: "Staples", limit: true },
-        { id: 3, name: "Basmati Rice Premium (1kg)", price: 360, cat: "Staples", limit: false },
-        { id: 4, name: "Dalda Cooking Oil (1L Pouch)", price: 590, cat: "Oil", limit: true },
-        { id: 5, name: "Seasons Canola Oil (1L)", price: 585, cat: "Oil", limit: false },
-        { id: 6, name: "Chicken Meat (1kg)", price: 770, cat: "Meat", limit: false },
-        { id: 7, name: "Beef Boneless (1kg)", price: 1500, cat: "Meat", limit: false },
-        { id: 8, name: "Fresh Eggs (Dozen)", price: 300, cat: "Dairy", limit: true },
-        { id: 9, name: "Olper's Milk (1L)", price: 370, cat: "Dairy", limit: false },
-        { id: 10, name: "Pampers Premium S4 (Large)", price: 4750, cat: "Baby", limit: true }
-    ];
-
+    const inventory = [];
     const brandList = [
         ["Shan Biryani Masala", 120, "Spices"], ["National Mixed Pickle", 480, "Spices"],
         ["Mitchells Fruit Jam", 450, "Spices"], ["Youngs Mayonnaise", 520, "Spices"],
@@ -83,7 +93,21 @@
         ["Tang Orange 500g", 680, "Drinks"], ["Nestle Pure Life 1.5L", 100, "Drinks"]
     ];
 
-    // Filling to 210 items
+    // Added base items manually first as per your original code
+    const initialItems = [
+        { id: 1, name: "Sunridge Fortified Atta (10kg)", price: 1100, cat: "Staples", limit: false },
+        { id: 2, name: "Sugar / Cheeni (1kg)", price: 175, cat: "Staples", limit: true },
+        { id: 3, name: "Basmati Rice Premium (1kg)", price: 360, cat: "Staples", limit: false },
+        { id: 4, name: "Dalda Cooking Oil (1L Pouch)", price: 590, cat: "Oil", limit: true },
+        { id: 5, name: "Seasons Canola Oil (1L)", price: 585, cat: "Oil", limit: false },
+        { id: 6, name: "Chicken Meat (1kg)", price: 770, cat: "Meat", limit: false },
+        { id: 7, name: "Beef Boneless (1kg)", price: 1500, cat: "Meat", limit: false },
+        { id: 8, name: "Fresh Eggs (Dozen)", price: 300, cat: "Dairy", limit: true },
+        { id: 9, name: "Olper's Milk (1L)", price: 370, cat: "Dairy", limit: false },
+        { id: 10, name: "Pampers Premium S4 (Large)", price: 4750, cat: "Baby", limit: true }
+    ];
+    inventory.push(...initialItems);
+
     for(let i = 11; i <= 210; i++) {
         const template = brandList[i % brandList.length];
         inventory.push({
@@ -104,6 +128,10 @@
             `<button id="b-${c}" onclick="setCat('${c}')">${c}</button>`
         ).join('');
         setCat("All");
+    }
+
+    function toggleCart() {
+        document.getElementById('cart-sidebar').classList.toggle('active');
     }
 
     function setCat(c) {
@@ -147,6 +175,12 @@
     function refreshCart() {
         const container = document.getElementById('cart-content');
         const ids = Object.keys(cart);
+        
+        // Update FAB Badge
+        let count = 0;
+        ids.forEach(id => count += cart[id]);
+        document.getElementById('cart-count').innerText = count;
+
         if (ids.length === 0) {
             container.innerHTML = "Basket is empty";
             document.getElementById('total-val').innerText = "0";
@@ -167,7 +201,6 @@
             </div>`;
         }).join('');
         
-        // Auto-adds 50 delivery fee secretly
         document.getElementById('total-val').innerText = (subtotal + DELIVERY_FEE).toLocaleString();
     }
 
