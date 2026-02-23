@@ -679,7 +679,7 @@
             <h1>
                 <i class="fas fa-leaf"></i> Islamabad Mega Mart
             </h1>
-            <div class="badge"><i class="fas fa-check-circle"></i> 30+ items • two images added</div>
+            <div class="badge"><i class="fas fa-check-circle"></i> 30+ items • 6 images added</div>
         </div>
     </div>
 
@@ -844,11 +844,15 @@
             };
         }
 
-        // ----- REAL IMAGE MAPPING (UPDATED WITH images.jpeg for ID 2) -----
+        // ----- REAL IMAGE MAPPING (6 products with images) -----
         function getProductImageHtml(product) {
             const imageMap = {
                 1: 'images/Fortified-Chakki-ATTA-10KG.png',  // Sunridge Atta
-                2: 'images/images.jpeg'                      // Pillsbury Chakki Fresh Atta (as uploaded)
+                2: 'images/images.jpeg',                      // Pillsbury Chakki Fresh Atta
+                3: 'images/images(1).jpeg',                   // Whole Wheat Atta
+                4: 'images/images(2).jpeg',                   // Bajra Atta (you said images(2).jpeg)
+                5: 'images/images(3).jpeg',                   // Makai Atta (you said image(3).jpeg – but using images(3).jpeg)
+                6: 'images/images(4).jpeg'                    // Chana Besan (you said image(4).jpeg)
             };
             
             const imagePath = imageMap[product.id];
