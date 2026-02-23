@@ -679,7 +679,7 @@
             <h1>
                 <i class="fas fa-leaf"></i> Islamabad Mega Mart
             </h1>
-            <div class="badge"><i class="fas fa-check-circle"></i> 30+ items • your own image added</div>
+            <div class="badge"><i class="fas fa-check-circle"></i> 30+ items • two images added</div>
         </div>
     </div>
 
@@ -844,10 +844,11 @@
             };
         }
 
-        // ----- REAL IMAGE MAPPING -----
+        // ----- REAL IMAGE MAPPING (UPDATED WITH images.jpeg for ID 2) -----
         function getProductImageHtml(product) {
             const imageMap = {
-                1: 'images/Fortified-Chakki-ATTA-10KG.png'
+                1: 'images/Fortified-Chakki-ATTA-10KG.png',  // Sunridge Atta
+                2: 'images/images.jpeg'                      // Pillsbury Chakki Fresh Atta (as uploaded)
             };
             
             const imagePath = imageMap[product.id];
@@ -859,7 +860,7 @@
             }
         }
 
-        // ----- Inventory -----
+        // ----- Inventory (30 items) -----
         const inventory = [
             { id: 1, name: "Sunridge Fortified Atta (10kg)", price: 1180, cat: "Staples", limit: false },
             { id: 2, name: "Chakki Fresh Atta (10kg)", price: 1050, cat: "Staples", limit: false },
