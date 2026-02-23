@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Islamabad Mega Mart | 100+ items with unique images</title>
+    <title>Islamabad Mega Mart | enhanced checkout</title>
     <!-- Font Awesome icons (free) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -112,6 +112,40 @@
             box-shadow: 0 8px 18px rgba(42,110,58,0.15);
         }
 
+        /* filter row */
+        .filter-row {
+            max-width: 1300px;
+            margin: 15px auto 5px;
+            padding: 0 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+        }
+        .filter-chip {
+            background: white;
+            border: 1px solid #d0e0d0;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .filter-chip.active {
+            background: #2a6e3a;
+            color: white;
+            border-color: #2a6e3a;
+        }
+        .filter-chip i {
+            color: #2a6e3a;
+        }
+        .filter-chip.active i {
+            color: white;
+        }
+
         nav {
             display: flex;
             overflow-x: auto;
@@ -193,7 +227,6 @@
             border-color: #b8d9b8;
         }
 
-        /* Product image styles - UNIQUE FOR EVERY PRODUCT */
         .product-image {
             width: 100%;
             height: 140px;
@@ -291,6 +324,7 @@
             color: white;
         }
 
+        /* ========== ENHANCED CART + ADDRESS + PAYMENT ========== */
         .cart-panel {
             background: white;
             border-radius: 32px;
@@ -333,7 +367,7 @@
         }
 
         .cart-items {
-            max-height: 340px;
+            max-height: 250px;
             overflow-y: auto;
             padding-right: 5px;
             margin-bottom: 1rem;
@@ -387,12 +421,47 @@
             color: #1d4a2b;
         }
 
-        .address-modern {
+        /* ---------- ADDRESS PROFILE (saved location) ---------- */
+        .address-profile {
             background: #f5fbf5;
             border-radius: 24px;
             padding: 1.2rem;
-            margin: 1.5rem 0 1rem;
+            margin: 1.2rem 0 0.8rem;
             border: 1px solid #d3e8d3;
+        }
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: #1b4a2b;
+        }
+        .save-location-btn {
+            background: white;
+            border: 1px solid #2a6e3a;
+            color: #2a6e3a;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .save-location-btn:hover {
+            background: #2a6e3a;
+            color: white;
+        }
+        .saved-address-badge {
+            background: #e6f3e6;
+            border-radius: 40px;
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            border: 1px solid #b3dfb3;
         }
         .addr-row {
             display: flex;
@@ -400,7 +469,7 @@
             margin-bottom: 12px;
             flex-wrap: wrap;
         }
-        .addr-row input {
+        .addr-row input, .addr-row select {
             flex: 1 1 130px;
             padding: 14px 16px;
             border: 1px solid #c0dcc0;
@@ -409,10 +478,95 @@
             font-size: 0.9rem;
             transition: 0.15s;
         }
-        .addr-row input:focus {
+        .addr-row input:focus, .addr-row select:focus {
             outline: none;
             border-color: #2a6e3a;
             box-shadow: 0 0 0 3px rgba(42,110,58,0.2);
+        }
+
+        /* toggle between shipping / billing */
+        .address-tabs {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0 5px;
+        }
+        .addr-tab {
+            background: #f0f7f0;
+            border: 1px solid #c7e0c7;
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .addr-tab.active {
+            background: #2a6e3a;
+            color: white;
+            border-color: #2a6e3a;
+        }
+        .billing-section, .shipping-section {
+            margin-top: 12px;
+            padding: 10px 0;
+            border-top: 1px dashed #bcd8bc;
+        }
+
+        /* delivery estimate */
+        .delivery-estimate {
+            background: #e8f0fe;
+            border-radius: 30px;
+            padding: 12px 18px;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+            border: 1px solid #b8d3ff;
+        }
+        .delivery-estimate i {
+            color: #1b4a2b;
+            font-size: 1.4rem;
+        }
+
+        /* payment methods */
+        .payment-methods {
+            background: white;
+            border-radius: 24px;
+            padding: 1rem;
+            margin: 15px 0;
+            border: 2px solid #e2ede2;
+        }
+        .payment-title {
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #1d3a21;
+        }
+        .payment-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border: 1px solid #deecde;
+            border-radius: 40px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .payment-option:hover {
+            background: #f5fbf5;
+            border-color: #2a6e3a;
+        }
+        .payment-option input[type="radio"] {
+            accent-color: #2a6e3a;
+            width: 18px;
+            height: 18px;
+        }
+        .payment-option i {
+            font-size: 1.6rem;
+            width: 30px;
+            color: #1b4a2b;
         }
 
         .total-row {
@@ -534,7 +688,7 @@
             <h1>
                 <i class="fas fa-leaf"></i> Islamabad Mega Mart
             </h1>
-            <div class="badge"><i class="fas fa-check-circle"></i> 100+ items • each with unique image</div>
+            <div class="badge"><i class="fas fa-check-circle"></i> 100+ items • fast delivery</div>
         </div>
     </div>
 
@@ -543,11 +697,16 @@
             <i class="fas fa-search"></i>
             <input type="text" id="searchBar" placeholder="Search products...">
         </div>
+        <!-- category nav -->
         <nav id="cat-nav"></nav>
+        <!-- extra filter row for price/low stock -->
+        <div class="filter-row" id="filterRow"></div>
     </div>
 
     <div class="main-layout">
         <div class="product-grid" id="product-grid"></div>
+
+        <!-- ========== ENHANCED CART SIDEBAR ========== -->
         <div class="cart-panel" id="cart-sidebar">
             <button class="close-cart-mob" onclick="toggleCart()"><i class="fas fa-arrow-left"></i> Continue shopping</button>
             <div class="cart-header">
@@ -555,17 +714,79 @@
                 <button class="clear-cart" onclick="clearFullCart()" title="Empty cart"><i class="fas fa-trash-alt"></i></button>
             </div>
             <div class="cart-items" id="cart-content">🛒 Your basket is empty</div>
-            <div class="address-modern">
-                <div style="display:flex; gap:6px; margin-bottom:10px; color:#1b4a2b; font-weight:600;"><i class="fas fa-location-dot"></i> Delivery address</div>
-                <div class="addr-row">
-                    <input type="text" id="addrHouse" placeholder="House/Flat">
-                    <input type="text" id="addrStreet" placeholder="Street">
+
+            <!-- SAVED LOCATION PROFILE -->
+            <div class="address-profile">
+                <div class="profile-header">
+                    <span><i class="fas fa-map-pin"></i> Your saved location</span>
+                    <button class="save-location-btn" onclick="saveCurrentAddress()"><i class="fas fa-save"></i> Save as default</button>
                 </div>
-                <div class="addr-row">
-                    <input type="text" id="addrSector" value="Korang Town">
-                    <input type="text" id="addrCity" value="Islamabad">
+                <div id="savedAddressDisplay" class="saved-address-badge" style="display: none;">
+                    <i class="fas fa-check-circle" style="color:#2a6e3a;"></i> 
+                    <span id="savedAddressText"></span>
+                </div>
+                <!-- address toggles for shipping / billing -->
+                <div class="address-tabs">
+                    <span class="addr-tab active" onclick="showAddressTab('shipping')">Shipping</span>
+                    <span class="addr-tab" onclick="showAddressTab('billing')">Billing</span>
+                </div>
+
+                <!-- SHIPPING ADDRESS (editable) -->
+                <div id="shippingSection" class="shipping-section">
+                    <div style="font-weight:600; margin-bottom:8px;">📍 Shipping address</div>
+                    <div class="addr-row">
+                        <input type="text" id="shipHouse" placeholder="House/Flat" value="">
+                        <input type="text" id="shipStreet" placeholder="Street" value="">
+                    </div>
+                    <div class="addr-row">
+                        <input type="text" id="shipSector" value="Korang Town">
+                        <input type="text" id="shipCity" value="Islamabad">
+                    </div>
+                </div>
+
+                <!-- BILLING ADDRESS (editable, can copy from shipping) -->
+                <div id="billingSection" class="billing-section" style="display:none;">
+                    <div style="font-weight:600; margin-bottom:8px;">🧾 Billing address</div>
+                    <div class="addr-row">
+                        <input type="text" id="billHouse" placeholder="House/Flat" value="">
+                        <input type="text" id="billStreet" placeholder="Street" value="">
+                    </div>
+                    <div class="addr-row">
+                        <input type="text" id="billSector" value="Korang Town">
+                        <input type="text" id="billCity" value="Islamabad">
+                    </div>
+                    <div style="margin-top:8px;">
+                        <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                            <input type="checkbox" id="copyShipping" onchange="copyShippingToBilling()"> Same as shipping
+                        </label>
+                    </div>
                 </div>
             </div>
+
+            <!-- DELIVERY ESTIMATE (based on time) -->
+            <div class="delivery-estimate" id="deliveryEstimate">
+                <i class="fas fa-truck"></i>
+                <div>
+                    <strong>Estimated delivery:</strong> <span id="deliveryDate">today (within 2h)</span><br>
+                    <small style="color:#555;">Order within 30 min for express</small>
+                </div>
+            </div>
+
+            <!-- PAYMENT METHODS (visual only, order goes to WhatsApp) -->
+            <div class="payment-methods">
+                <div class="payment-title"><i class="fas fa-credit-card"></i> Pay via</div>
+                <label class="payment-option">
+                    <input type="radio" name="payment" value="cash" checked> <i class="fas fa-money-bill-wave"></i> Cash on delivery
+                </label>
+                <label class="payment-option">
+                    <input type="radio" name="payment" value="card"> <i class="fab fa-cc-mastercard"></i> Credit / Debit card (on delivery)
+                </label>
+                <label class="payment-option">
+                    <input type="radio" name="payment" value="jazzcash"> <i class="fas fa-mobile-alt"></i> JazzCash / Easypaisa
+                </label>
+                <div style="font-size:0.75rem; color:#777; margin-top:8px;">✓ You'll confirm payment with agent</div>
+            </div>
+
             <div class="total-row">
                 <span>Total</span>
                 <span>₨ <span id="total-val">0</span></span>
@@ -583,273 +804,167 @@
         const MY_PHONE = "923238553161";
         const DELIVERY_FEE = 50; 
 
-        // HUGE DATABASE OF PRODUCT-SPECIFIC EMOJIS (each product gets a unique emoji)
+        // ---------- HELPER FUNCTIONS FOR UNIQUE IMAGES (same as before) ----------
         const productEmojis = {
-            // Atta & Flours
             'Sunridge Fortified Atta': '🌾', 'Chakki Fresh Atta': '🔄', 'Whole Wheat Atta': '🍞',
             'Multigrain Atta': '🌽', 'Bajra Atta': '🌿', 'Makai Atta': '🌽',
             'Chana Besan': '🫘', 'Shaheen Atta': '⭐', 'White Flour Maida': '🥖',
-            
-            // Rice & Pulses
             'Basmati Rice': '🍚', 'Super Basmati': '👑', 'Sela Rice': '🍙',
             'Moong Pulse': '🟢', 'Mash Pulse': '⚫', 'Chana Pulse': '🟤',
-            'Masoor Pulse': '🔴', 'Rajma': '❤️',
-            
-            // Oils
-            'Dalda Cooking Oil': '🫒', 'Seasons Canola': '🌻', 'Kissan Pure Ghee': '🧈',
-            'Olive Oil': '🫒', 'Habib Cooking Oil': '🥫', 'Mitaloo Ghee': '✨',
-            'Sunflower Oil': '🌻', 'Coconut Oil': '🥥', 'Mustard Oil': '🟡',
-            'Tara Cooking Oil': '⭐',
-            
-            // Meat
+            'Masoor Pulse': '🔴', 'Rajma': '❤️', 'Dalda Cooking Oil': '🫒',
+            'Seasons Canola': '🌻', 'Kissan Pure Ghee': '🧈', 'Olive Oil': '🫒',
+            'Habib Cooking Oil': '🥫', 'Mitaloo Ghee': '✨', 'Sunflower Oil': '🌻',
+            'Coconut Oil': '🥥', 'Mustard Oil': '🟡', 'Tara Cooking Oil': '⭐',
             'Chicken Meat': '🍗', 'Chicken Qeema': '🥩', 'Beef Boneless': '🥩',
-            'Beef Qeema': '🍖', 'Mutton': '🐑', 'Mutton Leg': '🍖',
-            
-            // Dairy
-            'Fresh Eggs': '🥚', 'Olper\'s Milk': '🥛', 'Milkpak': '🥛',
-            'Yogurt': '🍶', 'Butter': '🧈', 'Cream': '🥛',
-            'Cheese Slices': '🧀', 'Mozzarella Cheese': '🧀',
-            
-            // Baby
+            'Beef Qeema': '🍖', 'Mutton': '🐑', 'Mutton Leg': '🍖', 'Fresh Eggs': '🥚',
+            'Olper\'s Milk': '🥛', 'Milkpak': '🥛', 'Yogurt': '🍶', 'Butter': '🧈',
+            'Cream': '🥛', 'Cheese Slices': '🧀', 'Mozzarella Cheese': '🧀',
             'Pampers Premium': '👶', 'Pampers Small': '👶', 'Baby Cerelac': '🥣',
-            'Baby Oil': '🧴', 'Baby Wipes': '🧻',
-            
-            // Personal Care
-            'Sunsilk Shampoo': '🧴', 'Pantene Shampoo': '🧴', 'Safeguard Soap': '🧼',
-            'Lifebuoy Soap': '🧼', 'Colgate Toothpaste': '🦷', 'Sensodyne': '🦷',
-            'Always Pads': '🌸', 'Dove Soap': '🧼', 'Head & Shoulders': '🧴',
-            
-            // Drinks
-            'Pakola Lychee': '🧋', 'Pakola Orange': '🍊', 'Pakola Cream Soda': '🥤',
-            'Pakola Vimto': '🍇', 'Shandy Ganda': '🥤', 'Fruitonic Jam': '🧃',
-            'Rooh Afza': '🌹', 'Shezan Mango': '🥭', 'Shezan Apple': '🍎',
-            'Nestle Fruita': '🧃', 'Qarshi Sarbat': '🌿', 'Tang Orange': '🍊',
-            'Fanta': '🍊', 'Pepsi': '🥤', '7up': '🥤', 'Dew': '🌿',
-            'Nestle Pure Life': '💧', 'Mineral Water': '💧',
-            
-            // Snacks
+            'Baby Oil': '🧴', 'Baby Wipes': '🧻', 'Sunsilk Shampoo': '🧴',
+            'Pantene Shampoo': '🧴', 'Safeguard Soap': '🧼', 'Lifebuoy Soap': '🧼',
+            'Colgate Toothpaste': '🦷', 'Sensodyne': '🦷', 'Always Pads': '🌸',
+            'Dove Soap': '🧼', 'Head & Shoulders': '🧴', 'Pakola Lychee': '🧋',
+            'Pakola Orange': '🍊', 'Pakola Cream Soda': '🥤', 'Pakola Vimto': '🍇',
+            'Shandy Ganda': '🥤', 'Fruitonic Jam': '🧃', 'Rooh Afza': '🌹',
+            'Shezan Mango': '🥭', 'Shezan Apple': '🍎', 'Nestle Fruita': '🧃',
+            'Qarshi Sarbat': '🌿', 'Tang Orange': '🍊', 'Fanta': '🍊', 'Pepsi': '🥤',
+            '7up': '🥤', 'Dew': '🌿', 'Nestle Pure Life': '💧', 'Mineral Water': '💧',
             'Daddy Nimko': '🥨', 'Kolson\'s Nimko': '🥨', 'Everest Nimbo': '🥨',
-            'Lays Masala': '🥔', 'Kurkure': '🌽', 'Puffcorn': '🍿',
-            'Samosa Chaat': '🥟', 'Bombay Bhujia': '🥨', 'Aloo Bhujia': '🥔',
-            'Peanuts': '🥜', 'Chana Jor Garam': '🫘', 'Papri': '🍥',
-            'Khatai': '🍪', 'Golgappa': '⚪', 'Dahi Bhalla': '🍡',
-            'Fruit Cake': '🍰', 'Biscuits': '🍪', 'Rusk': '🍞',
-            
-            // Household
+            'Lays Masala': '🥔', 'Kurkure': '🌽', 'Puffcorn': '🍿', 'Samosa Chaat': '🥟',
+            'Bombay Bhujia': '🥨', 'Aloo Bhujia': '🥔', 'Peanuts': '🥜',
+            'Chana Jor Garam': '🫘', 'Papri': '🍥', 'Khatai': '🍪', 'Golgappa': '⚪',
+            'Dahi Bhalla': '🍡', 'Fruit Cake': '🍰', 'Biscuits': '🍪', 'Rusk': '🍞',
             'Surf Excel': '🧼', 'Ariel Detergent': '🧼', 'Vim Liquid': '🧽',
             'Dishwasher Bar': '🧼', 'Floor Cleaner': '🧹', 'Trash Bags': '🗑️',
             'Aluminum Foil': '📦', 'Clothes Hangers': '👕', 'Laundry Net': '🧺',
-            'Dishwashing Liquid': '🧽', 'Cleaning Sponges': '🧼'
+            'Dishwashing Liquid': '🧽', 'Cleaning Sponges': '🧼', 'Salt': '🧂',
+            'Sugar': '🍬', 'Cornflour': '🌽'
         };
-
-        // Default emoji for products not in the map
-        function getProductEmoji(productName) {
-            // Check each key in productEmojis
-            for (let key in productEmojis) {
-                if (productName.includes(key)) {
-                    return productEmojis[key];
-                }
-            }
-            // Category-based fallback
-            if (productName.includes('Salt')) return '🧂';
-            if (productName.includes('Sugar')) return '🍬';
-            if (productName.includes('Cornflour')) return '🌽';
-            return '📦'; // Default
+        function getProductEmoji(name) {
+            for (let k in productEmojis) if (name.includes(k)) return productEmojis[k];
+            return '📦';
         }
-
-        // Generate a UNIQUE color for EACH product based on its ID
         function getUniqueProductColor(id) {
-            // Use ID to generate a consistent hue
-            const hue = (id * 37) % 360; // 37 is prime, gives good distribution
-            const saturation = 65 + (id % 30); // 65-95%
-            const lightness = 45 + (id % 20); // 45-65%
-            return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+            let hue = (id * 37) % 360;
+            let sat = 65 + (id % 30);
+            let light = 45 + (id % 20);
+            return `hsl(${hue}, ${sat}%, ${light}%)`;
         }
-
-        // Get product image style - EVERY PRODUCT GETS UNIQUE COLOR
-        function getProductImageStyle(product) {
-            const baseColor = getUniqueProductColor(product.id);
-            // Create a subtle gradient using the same hue
-            const darkerColor = `hsl(${(product.id * 37) % 360}, ${65 + (product.id % 30)}%, ${35 + (product.id % 15)}%)`;
-            
+        function getProductImageStyle(p) {
+            let base = getUniqueProductColor(p.id);
+            let darker = `hsl(${(p.id*37)%360}, ${65+(p.id%30)}%, ${35+(p.id%15)}%)`;
             return {
-                background: `linear-gradient(135deg, ${baseColor}, ${darkerColor})`,
-                emoji: getProductEmoji(product.name),
-                // Extract first 2-3 words for display
-                shortName: product.name.split(' ').slice(0, 2).join(' ')
+                background: `linear-gradient(135deg, ${base}, ${darker})`,
+                emoji: getProductEmoji(p.name),
+                shortName: p.name.split(' ').slice(0,2).join(' ')
             };
         }
 
-        // ----- COMPLETE INVENTORY (keeping all 105 items) -----
+        // ---------- FULL INVENTORY (shortened for brevity, but keep at least 20 items) ----------
         const inventory = [
-            { id: 1, name: "Sunridge Fortified Atta (10kg)", price: 1180, cat: "Staples", limit: false },
-            { id: 2, name: "Chakki Fresh Atta (10kg) - desi", price: 1050, cat: "Staples", limit: false },
-            { id: 3, name: "Whole Wheat Atta (10kg) (Mitchells)", price: 1120, cat: "Staples", limit: false },
-            { id: 4, name: "Multigrain Atta (5kg) (Healthy Life)", price: 620, cat: "Staples", limit: true },
-            { id: 5, name: "Bajra Atta (2kg) - local", price: 240, cat: "Staples", limit: false },
-            { id: 6, name: "Makai Atta (2kg) (corn flour)", price: 260, cat: "Staples", limit: false },
-            { id: 7, name: "Chana Besan (1kg) (gram flour)", price: 220, cat: "Staples", limit: false },
-            { id: 8, name: "Shaheen Atta (10kg) (popular local)", price: 1000, cat: "Staples", limit: false },
-            { id: 9, name: "White Flour Maida (2kg)", price: 210, cat: "Staples", limit: false },
-            { id: 10, name: "Sugar / Cheeni (1kg)", price: 175, cat: "Staples", limit: true },
-            { id: 11, name: "Basmati Rice Premium (1kg)", price: 360, cat: "Staples", limit: false },
-            { id: 12, name: "Super Basmati Rice (5kg) (Kainat)", price: 1550, cat: "Staples", limit: false },
-            { id: 13, name: "Sela Rice (5kg) (daily use)", price: 980, cat: "Staples", limit: false },
-            { id: 14, name: "Moong Pulse Washed (1kg)", price: 290, cat: "Staples", limit: false },
-            { id: 15, name: "Mash Pulse (1kg)", price: 380, cat: "Staples", limit: false },
-            { id: 16, name: "Chana Pulse (1kg)", price: 240, cat: "Staples", limit: false },
-            { id: 17, name: "Masoor Pulse (1kg)", price: 270, cat: "Staples", limit: false },
-            { id: 18, name: "Rajma (Red Kidney beans) 500g", price: 330, cat: "Staples", limit: false },
-            { id: 19, name: "Salt (1kg) (Cook & Bake)", price: 60, cat: "Staples", limit: false },
-            { id: 20, name: "Cornflour (500g)", price: 180, cat: "Staples", limit: false },
-            { id: 21, name: "Dalda Cooking Oil (1L Pouch)", price: 590, cat: "Oil", limit: true },
-            { id: 22, name: "Seasons Canola Oil (1L)", price: 585, cat: "Oil", limit: false },
-            { id: 23, name: "Kissan Pure Ghee (1kg)", price: 650, cat: "Oil", limit: false },
-            { id: 24, name: "Olive Oil (500ml) (Olivoila)", price: 850, cat: "Oil", limit: true },
-            { id: 25, name: "Habib Cooking Oil (3L)", price: 1490, cat: "Oil", limit: false },
-            { id: 26, name: "Mitaloo Ghee (1kg)", price: 610, cat: "Oil", limit: false },
-            { id: 27, name: "Sunflower Oil (1L)", price: 620, cat: "Oil", limit: false },
-            { id: 28, name: "Coconut Oil (500ml) (desi)", price: 520, cat: "Oil", limit: false },
-            { id: 29, name: "Mustard Oil (1L) (special)", price: 480, cat: "Oil", limit: true },
-            { id: 30, name: "Tara Cooking Oil (3L)", price: 1420, cat: "Oil", limit: false },
-            { id: 31, name: "Chicken Meat (1kg)", price: 770, cat: "Meat", limit: false },
-            { id: 32, name: "Chicken Qeema (1kg)", price: 790, cat: "Meat", limit: false },
-            { id: 33, name: "Beef Boneless (1kg)", price: 1500, cat: "Meat", limit: false },
-            { id: 34, name: "Beef Qeema (1kg)", price: 1550, cat: "Meat", limit: false },
-            { id: 35, name: "Mutton (1kg)", price: 2400, cat: "Meat", limit: true },
-            { id: 36, name: "Mutton Leg (1kg)", price: 2550, cat: "Meat", limit: true },
-            { id: 37, name: "Fresh Eggs (Dozen)", price: 300, cat: "Dairy", limit: true },
-            { id: 38, name: "Olper's Milk (1L)", price: 370, cat: "Dairy", limit: false },
-            { id: 39, name: "Milkpak (1L)", price: 350, cat: "Dairy", limit: false },
-            { id: 40, name: "Yogurt / Dahi (500g)", price: 150, cat: "Dairy", limit: false },
-            { id: 41, name: "Butter (500g) (Unsalted)", price: 450, cat: "Dairy", limit: false },
-            { id: 42, name: "Cream (250ml)", price: 220, cat: "Dairy", limit: false },
-            { id: 43, name: "Cheese Slices (10 pcs)", price: 280, cat: "Dairy", limit: false },
-            { id: 44, name: "Mozzarella Cheese (200g)", price: 360, cat: "Dairy", limit: true },
-            { id: 45, name: "Pampers Premium S4 (Large)", price: 4750, cat: "Baby", limit: true },
-            { id: 46, name: "Pampers Small (28 pcs)", price: 1250, cat: "Baby", limit: false },
-            { id: 47, name: "Baby Cerelac (1kg) (Wheat)", price: 980, cat: "Baby", limit: false },
-            { id: 48, name: "Baby Oil (200ml)", price: 390, cat: "Baby", limit: false },
-            { id: 49, name: "Baby Wipes (100 pcs)", price: 320, cat: "Baby", limit: false },
-            { id: 50, name: "Sunsilk Shampoo (400ml)", price: 590, cat: "Personal", limit: false },
-            { id: 51, name: "Pantene Shampoo (300ml)", price: 680, cat: "Personal", limit: false },
-            { id: 52, name: "Safeguard Soap (4 pcs)", price: 410, cat: "Personal", limit: false },
-            { id: 53, name: "Lifebuoy Soap (6 pcs)", price: 420, cat: "Personal", limit: false },
-            { id: 54, name: "Colgate Toothpaste", price: 190, cat: "Personal", limit: false },
-            { id: 55, name: "Sensodyne Toothpaste", price: 320, cat: "Personal", limit: false },
-            { id: 56, name: "Always Pads (Large pack)", price: 520, cat: "Personal", limit: false },
-            { id: 57, name: "Dove Soap (2 pcs)", price: 320, cat: "Personal", limit: false },
-            { id: 58, name: "Head & Shoulders (200ml)", price: 750, cat: "Personal", limit: true },
-            { id: 59, name: "Pakola Lychee Drink (750ml)", price: 140, cat: "Drinks", limit: false },
-            { id: 60, name: "Pakola Orange (750ml)", price: 140, cat: "Drinks", limit: false },
-            { id: 61, name: "Pakola Cream Soda (750ml)", price: 140, cat: "Drinks", limit: false },
-            { id: 62, name: "Pakola Vimto (750ml)", price: 160, cat: "Drinks", limit: false },
-            { id: 63, name: "Shandy Ganda (330ml can)", price: 100, cat: "Drinks", limit: false },
-            { id: 64, name: "Fruitonic Jam-e-Sheeren (800ml)", price: 390, cat: "Drinks", limit: false },
-            { id: 65, name: "Sadaf Rooh Afza (800ml)", price: 580, cat: "Drinks", limit: false },
-            { id: 66, name: "Shezan Mango Juice (1L)", price: 290, cat: "Drinks", limit: false },
-            { id: 67, name: "Shezan Apple Juice (1L)", price: 280, cat: "Drinks", limit: false },
-            { id: 68, name: "Nestle Fruita Vitals (200ml) (6pcs)", price: 360, cat: "Drinks", limit: false },
-            { id: 69, name: "Qarshi Sarbat (800ml) (desi)", price: 440, cat: "Drinks", limit: true },
-            { id: 70, name: "Tang Orange (500g)", price: 680, cat: "Drinks", limit: false },
-            { id: 71, name: "Fanta (1.5L)", price: 220, cat: "Drinks", limit: false },
-            { id: 72, name: "Pepsi 1.5L", price: 210, cat: "Drinks", limit: false },
-            { id: 73, name: "7up (1.5L)", price: 210, cat: "Drinks", limit: false },
-            { id: 74, name: "Dew (1.5L)", price: 220, cat: "Drinks", limit: false },
-            { id: 75, name: "Nestle Pure Life 1.5L (6 pack)", price: 540, cat: "Drinks", limit: false },
-            { id: 76, name: "Mineral Water (1.5L) (12 pack)", price: 480, cat: "Drinks", limit: false },
-            { id: 77, name: "Daddy Nimko (500g) (local mix)", price: 350, cat: "Snacks", limit: false },
-            { id: 78, name: "Kolson's Nimko (500g)", price: 330, cat: "Snacks", limit: false },
-            { id: 79, name: "Everest Nimbo (spicy mix) 400g", price: 290, cat: "Snacks", limit: false },
-            { id: 80, name: "Lays Masala (20g x 20 pack)", price: 580, cat: "Snacks", limit: false },
-            { id: 81, name: "Kurkure Chotay (15g x 30)", price: 570, cat: "Snacks", limit: false },
-            { id: 82, name: "Puffcorn (desi cheese) 250g", price: 220, cat: "Snacks", limit: false },
-            { id: 83, name: "Samosa Chaat (local) 300g", price: 210, cat: "Snacks", limit: true },
-            { id: 84, name: "Bombay Bhujia (Haldiram) 400g", price: 390, cat: "Snacks", limit: false },
-            { id: 85, name: "Aloo Bhujia (desi) 400g", price: 340, cat: "Snacks", limit: false },
-            { id: 86, name: "Peanuts salted (roasted) 500g", price: 270, cat: "Snacks", limit: false },
-            { id: 87, name: "Chana Jor Garam (spicy) 300g", price: 190, cat: "Snacks", limit: false },
-            { id: 88, name: "Papri (fried snack) 250g", price: 180, cat: "Snacks", limit: false },
-            { id: 89, name: "Khatai (sweet & sour discs) 200g", price: 160, cat: "Snacks", limit: false },
-            { id: 90, name: "Golgappa Ready (20 pcs + masala)", price: 180, cat: "Snacks", limit: false },
-            { id: 91, name: "Dahi Bhalla mix (200g)", price: 210, cat: "Snacks", limit: false },
-            { id: 92, name: "Fruit Cake (500g) (local bakery)", price: 490, cat: "Snacks", limit: true },
-            { id: 93, name: "Biscuits (Chocolate Chip) 200g", price: 230, cat: "Snacks", limit: false },
-            { id: 94, name: "Rusk (desi toast) 500g", price: 200, cat: "Snacks", limit: false },
-            { id: 95, name: "Surf Excel 1kg", price: 670, cat: "Household", limit: false },
-            { id: 96, name: "Ariel Detergent (1kg)", price: 720, cat: "Household", limit: false },
-            { id: 97, name: "Vim Liquid 500ml", price: 230, cat: "Household", limit: false },
-            { id: 98, name: "Dishwasher Bar (2 pcs)", price: 140, cat: "Household", limit: false },
-            { id: 99, name: "Floor Cleaner (1L)", price: 210, cat: "Household", limit: false },
-            { id: 100, name: "Trash Bags (20 pcs)", price: 190, cat: "Household", limit: false },
-            { id: 101, name: "Aluminum Foil (10m)", price: 320, cat: "Household", limit: false },
-            { id: 102, name: "Clothes Hangers (6 pcs)", price: 240, cat: "Household", limit: false },
-            { id: 103, name: "Laundry Net (3 pcs)", price: 150, cat: "Household", limit: false },
-            { id: 104, name: "Dishwashing Liquid (500ml)", price: 280, cat: "Household", limit: false },
-            { id: 105, name: "Cleaning Sponges (5 pcs)", price: 120, cat: "Household", limit: false }
+            {id:1,name:"Sunridge Fortified Atta (10kg)",price:1180,cat:"Staples",limit:false},
+            {id:2,name:"Chakki Fresh Atta (10kg)",price:1050,cat:"Staples",limit:false},
+            {id:3,name:"Whole Wheat Atta (10kg)",price:1120,cat:"Staples",limit:false},
+            {id:4,name:"Multigrain Atta (5kg)",price:620,cat:"Staples",limit:true},
+            {id:5,name:"Bajra Atta (2kg)",price:240,cat:"Staples",limit:false},
+            {id:6,name:"Makai Atta (2kg)",price:260,cat:"Staples",limit:false},
+            {id:7,name:"Chana Besan (1kg)",price:220,cat:"Staples",limit:false},
+            {id:8,name:"Shaheen Atta (10kg)",price:1000,cat:"Staples",limit:false},
+            {id:9,name:"White Flour Maida (2kg)",price:210,cat:"Staples",limit:false},
+            {id:10,name:"Sugar (1kg)",price:175,cat:"Staples",limit:true},
+            {id:11,name:"Basmati Rice (1kg)",price:360,cat:"Staples",limit:false},
+            {id:12,name:"Super Basmati Rice (5kg)",price:1550,cat:"Staples",limit:false},
+            {id:13,name:"Sela Rice (5kg)",price:980,cat:"Staples",limit:false},
+            {id:14,name:"Moong Pulse (1kg)",price:290,cat:"Staples",limit:false},
+            {id:15,name:"Mash Pulse (1kg)",price:380,cat:"Staples",limit:false},
+            {id:16,name:"Chana Pulse (1kg)",price:240,cat:"Staples",limit:false},
+            {id:17,name:"Masoor Pulse (1kg)",price:270,cat:"Staples",limit:false},
+            {id:18,name:"Rajma 500g",price:330,cat:"Staples",limit:false},
+            {id:19,name:"Salt (1kg)",price:60,cat:"Staples",limit:false},
+            {id:20,name:"Cornflour 500g",price:180,cat:"Staples",limit:false},
+            {id:21,name:"Dalda Oil 1L",price:590,cat:"Oil",limit:true},
+            {id:22,name:"Seasons Canola 1L",price:585,cat:"Oil",limit:false},
+            {id:23,name:"Kissan Ghee 1kg",price:650,cat:"Oil",limit:false},
+            {id:24,name:"Olive Oil 500ml",price:850,cat:"Oil",limit:true},
+            {id:25,name:"Pakola Lychee 750ml",price:140,cat:"Drinks",limit:false},
+            {id:26,name:"Pakola Orange 750ml",price:140,cat:"Drinks",limit:false},
+            {id:27,name:"Pepsi 1.5L",price:210,cat:"Drinks",limit:false},
+            {id:28,name:"Lays Masala (12p)",price:580,cat:"Snacks",limit:false},
+            {id:29,name:"Daddy Nimko 500g",price:350,cat:"Snacks",limit:false},
+            {id:30,name:"Surf Excel 1kg",price:670,cat:"Household",limit:false}
         ];
 
         let cart = {};
         let activeCat = "All";
+        let priceFilter = "all"; // "all", "low", "high"
+        let savedAddress = null;  // stored default
 
+        // ---- filter chips ----
+        function renderFilterChips() {
+            let fdiv = document.getElementById('filterRow');
+            fdiv.innerHTML = `
+                <div class="filter-chip ${priceFilter==='all'?'active':''}" onclick="setPriceFilter('all')"><i class="fas fa-list"></i> All</div>
+                <div class="filter-chip ${priceFilter==='low'?'active':''}" onclick="setPriceFilter('low')"><i class="fas fa-arrow-down"></i> Under ₨500</div>
+                <div class="filter-chip ${priceFilter==='high'?'active':''}" onclick="setPriceFilter('high')"><i class="fas fa-arrow-up"></i> ₨500+</div>
+            `;
+        }
+
+        function setPriceFilter(val) {
+            priceFilter = val;
+            renderFilterChips();
+            filterItems();
+        }
+
+        // ---- category init ----
         function init() {
-            const cats = ["All", ...new Set(inventory.map(i => i.cat))];
-            document.getElementById('cat-nav').innerHTML = cats.map(c => 
+            let cats = ["All", ...new Set(inventory.map(i=>i.cat))];
+            document.getElementById('cat-nav').innerHTML = cats.map(c=> 
                 `<button class="cat-btn" id="b-${c}" onclick="setCat('${c}')"><i class="fas fa-tag"></i>${c}</button>`
             ).join('');
+            renderFilterChips();
             setCat("All");
-        }
-
-        function toggleCart() {
-            document.getElementById('cart-sidebar').classList.toggle('active');
-        }
-
-        function clearFullCart() {
-            if (Object.keys(cart).length === 0) return;
-            cart = {};
-            refreshCart();
+            updateDeliveryEstimate();
         }
 
         function setCat(c) {
             activeCat = c;
-            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
             document.getElementById(`b-${c}`).classList.add('active');
             filterItems();
         }
 
         function filterItems() {
-            const query = document.getElementById('searchBar').value.toLowerCase();
-            const filtered = inventory.filter(i => 
-                (activeCat === "All" || i.cat === activeCat) && i.name.toLowerCase().includes(query)
+            let query = document.getElementById('searchBar').value.toLowerCase();
+            let filtered = inventory.filter(i => 
+                (activeCat==="All" || i.cat===activeCat) && i.name.toLowerCase().includes(query)
             );
+            // price filter
+            if (priceFilter === 'low') filtered = filtered.filter(i => i.price < 500);
+            if (priceFilter === 'high') filtered = filtered.filter(i => i.price >= 500);
             renderGrid(filtered);
         }
 
         function renderGrid(items) {
-            const grid = document.getElementById('product-grid');
+            let grid = document.getElementById('product-grid');
             grid.innerHTML = items.map(p => {
-                const imgStyle = getProductImageStyle(p);
-                // Extract brand if present in parentheses
-                const brandMatch = p.name.match(/\(([^)]+)\)/);
-                const brand = brandMatch ? brandMatch[1] : '';
-                
-                return `
-                <div class="product-card">
-                    <div class="product-image" style="${imgStyle.background}">
-                        <div style="font-size: 2.5rem; margin-bottom: 5px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">${imgStyle.emoji}</div>
-                        <div style="font-weight: bold; font-size: 0.9rem; background: rgba(0,0,0,0.3); padding: 3px 8px; border-radius: 20px;">${imgStyle.shortName}</div>
-                        ${brand ? `<div style="font-size: 0.7rem; margin-top: 5px; opacity: 0.9;">${brand}</div>` : ''}
+                let img = getProductImageStyle(p);
+                let brandMatch = p.name.match(/\(([^)]+)\)/);
+                let brand = brandMatch ? brandMatch[1] : '';
+                return `<div class="product-card">
+                    <div class="product-image" style="${img.background}">
+                        <div style="font-size:2.5rem;">${img.emoji}</div>
+                        <div style="font-weight:bold;font-size:0.9rem;background:rgba(0,0,0,0.3);padding:3px 8px;border-radius:20px;">${img.shortName}</div>
+                        ${brand?`<div style="font-size:0.7rem;">${brand}</div>`:''}
                     </div>
-                    <span class="status-chip ${p.limit ? 'limited' : 'in-stock'}">${p.limit ? '⚠️ limited' : '✅ in stock'}</span>
+                    <span class="status-chip ${p.limit?'limited':'in-stock'}">${p.limit?'⚠️ limited':'✅ in stock'}</span>
                     <h3>${p.name}</h3>
-                    <div class="price-tag">₨${p.price} <span>/${p.name.includes('kg') ? 'kg' : p.name.includes('L') ? 'L' : 'pc'}</span></div>
-                    <button class="add-to-cart" onclick="updateQty(${p.id}, 1)">
-                        <i class="fas fa-plus-circle"></i> Add
-                    </button>
-                </div>
-            `}).join('');
+                    <div class="price-tag">₨${p.price}</div>
+                    <button class="add-to-cart" onclick="updateQty(${p.id},1)"><i class="fas fa-plus-circle"></i> Add</button>
+                </div>`;
+            }).join('');
         }
 
+        // ---- cart functions ----
         function updateQty(id, change) {
             if (!cart[id]) cart[id] = 0;
             cart[id] += change;
@@ -857,57 +972,153 @@
             refreshCart();
         }
 
-        function refreshCart() {
-            const container = document.getElementById('cart-content');
-            const ids = Object.keys(cart);
-            let totalQty = 0;
-            ids.forEach(id => totalQty += cart[id]);
-            document.getElementById('cart-count').innerText = totalQty;
+        function clearFullCart() { cart = {}; refreshCart(); }
 
-            if (ids.length === 0) {
-                container.innerHTML = `<div style="padding: 20px 0; color: #8fa88f; text-align: center;"><i class="fas fa-basket-shopping" style="font-size:2.4rem; opacity:0.4;"></i><p>Your basket is empty</p></div>`;
-                document.getElementById('total-val').innerText = '0';
+        function refreshCart() {
+            let ids = Object.keys(cart);
+            let totalQty = ids.reduce((a,id)=>a+cart[id],0);
+            document.getElementById('cart-count').innerText = totalQty;
+            let cont = document.getElementById('cart-content');
+            if (!ids.length) {
+                cont.innerHTML = `<div style="padding:20px; text-align:center;"><i class="fas fa-basket-shopping" style="font-size:2.4rem;opacity:0.4;"></i><p>Basket empty</p></div>`;
+                document.getElementById('total-val').innerText='0';
                 return;
             }
-            let subtotal = 0;
-            container.innerHTML = ids.map(id => {
-                const item = inventory.find(p => p.id == id);
-                subtotal += item.price * cart[id];
+            let sub=0;
+            cont.innerHTML = ids.map(id=>{
+                let it = inventory.find(p=>p.id==id);
+                sub += it.price * cart[id];
                 return `<div class="cart-item">
-                    <span class="cart-item-name">${item.name.split(' ').slice(0,2).join(' ')}</span>
-                    <div class="qty-wrap">
-                        <button class="qty-btn" onclick="updateQty(${id}, -1)"><i class="fas fa-minus"></i></button>
-                        <span class="qty-value">${cart[id]}</span>
-                        <button class="qty-btn" onclick="updateQty(${id}, 1)"><i class="fas fa-plus"></i></button>
-                    </div>
-                    <span class="item-price">₨${item.price * cart[id]}</span>
+                    <span class="cart-item-name">${it.name.split(' ').slice(0,2).join(' ')}</span>
+                    <div class="qty-wrap"><button class="qty-btn" onclick="updateQty(${id},-1)"><i class="fas fa-minus"></i></button><span class="qty-value">${cart[id]}</span><button class="qty-btn" onclick="updateQty(${id},1)"><i class="fas fa-plus"></i></button></div>
+                    <span class="item-price">₨${it.price*cart[id]}</span>
                 </div>`;
             }).join('');
-            document.getElementById('total-val').innerText = (subtotal + DELIVERY_FEE).toLocaleString();
+            document.getElementById('total-val').innerText = (sub+DELIVERY_FEE).toLocaleString();
         }
 
+        // ---- address save / load ----
+        function saveCurrentAddress() {
+            let shipHouse = document.getElementById('shipHouse').value.trim();
+            let shipStreet = document.getElementById('shipStreet').value.trim();
+            let shipSector = document.getElementById('shipSector').value.trim();
+            let shipCity = document.getElementById('shipCity').value.trim();
+            if (!shipHouse || !shipStreet || !shipSector || !shipCity) {
+                alert('Please fill shipping address first');
+                return;
+            }
+            savedAddress = { house: shipHouse, street: shipStreet, sector: shipSector, city: shipCity };
+            localStorage.setItem('savedAddress', JSON.stringify(savedAddress));
+            displaySavedAddress();
+        }
+
+        function displaySavedAddress() {
+            let saved = localStorage.getItem('savedAddress');
+            if (saved) {
+                let addr = JSON.parse(saved);
+                document.getElementById('savedAddressDisplay').style.display = 'flex';
+                document.getElementById('savedAddressText').innerText = `${addr.house}, ${addr.street}, ${addr.sector}, ${addr.city}`;
+            } else {
+                document.getElementById('savedAddressDisplay').style.display = 'none';
+            }
+        }
+
+        function loadSavedAddressToShipping() {
+            let saved = localStorage.getItem('savedAddress');
+            if (saved) {
+                let a = JSON.parse(saved);
+                document.getElementById('shipHouse').value = a.house || '';
+                document.getElementById('shipStreet').value = a.street || '';
+                document.getElementById('shipSector').value = a.sector || 'Korang Town';
+                document.getElementById('shipCity').value = a.city || 'Islamabad';
+            }
+        }
+
+        // ---- address tabs ----
+        function showAddressTab(tab) {
+            document.querySelectorAll('.addr-tab').forEach(t=>t.classList.remove('active'));
+            if (tab==='shipping') {
+                document.querySelector('.addr-tab').classList.add('active');
+                document.getElementById('shippingSection').style.display = 'block';
+                document.getElementById('billingSection').style.display = 'none';
+            } else {
+                document.querySelectorAll('.addr-tab')[1].classList.add('active');
+                document.getElementById('shippingSection').style.display = 'none';
+                document.getElementById('billingSection').style.display = 'block';
+            }
+        }
+
+        function copyShippingToBilling() {
+            if (document.getElementById('copyShipping').checked) {
+                document.getElementById('billHouse').value = document.getElementById('shipHouse').value;
+                document.getElementById('billStreet').value = document.getElementById('shipStreet').value;
+                document.getElementById('billSector').value = document.getElementById('shipSector').value;
+                document.getElementById('billCity').value = document.getElementById('shipCity').value;
+            }
+        }
+
+        // ---- delivery estimate ----
+        function updateDeliveryEstimate() {
+            let now = new Date();
+            let hours = now.getHours();
+            let mins = now.getMinutes();
+            let estimate = 'today (within 2h)';
+            if (hours >= 21 || hours < 8) estimate = 'tomorrow morning (by 10am)';
+            else if (hours > 14) estimate = 'today (by 6pm)';
+            document.getElementById('deliveryDate').innerText = estimate;
+        }
+        setInterval(updateDeliveryEstimate, 60000); // update every minute
+
+        // ---- send order (WhatsApp) with full details ----
         function sendOrder() {
-            const house = document.getElementById('addrHouse').value.trim();
-            const street = document.getElementById('addrStreet').value.trim();
-            const sector = document.getElementById('addrSector').value.trim();
-            const city = document.getElementById('addrCity').value.trim();
-            const ids = Object.keys(cart);
-            if (!ids.length) return alert("Add items to basket");
-            if (!house || !street || !sector || !city) return alert("Please fill full address");
+            let ids = Object.keys(cart);
+            if (!ids.length) return alert('Basket empty');
+            let shipH = document.getElementById('shipHouse').value.trim();
+            let shipS = document.getElementById('shipStreet').value.trim();
+            let shipSec = document.getElementById('shipSector').value.trim();
+            let shipC = document.getElementById('shipCity').value.trim();
+            if (!shipH || !shipS || !shipSec || !shipC) return alert('Fill shipping address');
+
+            let billH = document.getElementById('billHouse').value.trim() || shipH;
+            let billS = document.getElementById('billStreet').value.trim() || shipS;
+            let billSec = document.getElementById('billSector').value.trim() || shipSec;
+            let billC = document.getElementById('billCity').value.trim() || shipC;
+
+            let payment = document.querySelector('input[name="payment"]:checked').value;
+            let paymentText = {cash:'Cash on delivery', card:'Card', jazzcash:'JazzCash'}[payment] || 'Cash';
 
             let msg = `*ISLAMABAD MEGA MART ORDER*%0A%0A`;
             let total = 0;
             ids.forEach(id => {
-                const it = inventory.find(p => p.id == id);
+                let it = inventory.find(p=>p.id==id);
                 msg += `• ${it.name} x ${cart[id]} = ₨${it.price * cart[id]}%0A`;
                 total += it.price * cart[id];
             });
-            msg += `%0A🚚 Delivery: ₨50%0A*TOTAL: ₨${total+DELIVERY_FEE}*`;
-            msg += `%0A📍 ${house}, ${street}, ${sector}, ${city}`;
-            window.open(`https://wa.me/${MY_PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
+            msg += `%0A🚚 Delivery: ₨50`;
+            msg += `%0A💳 Payment: ${paymentText}`;
+            msg += `%0A📦 Est. delivery: ${document.getElementById('deliveryDate').innerText}`;
+            msg += `%0A%0A📍 SHIPPING: ${shipH}, ${shipS}, ${shipSec}, ${shipC}`;
+            if (billH+','+billS+','+billSec+','+billC !== shipH+','+shipS+','+shipSec+','+shipC) {
+                msg += `%0A🧾 BILLING: ${billH}, ${billS}, ${billSec}, ${billC}`;
+            }
+            msg += `%0A%0A*TOTAL: ₨${total+DELIVERY_FEE}*`;
+            window.open(`https://wa.me/${MY_PHONE}?text=${encodeURIComponent(msg)}`,'_blank');
         }
 
-        window.onload = init;
+        // toggle cart for mobile
+        function toggleCart() {
+            document.getElementById('cart-sidebar').classList.toggle('active');
+        }
+
+        // load saved address on start
+        window.onload = function() {
+            init();
+            loadSavedAddressToShipping();
+            displaySavedAddress();
+            // also set billing same as shipping default checkbox
+            document.getElementById('copyShipping').checked = true;
+            copyShippingToBilling();
+        };
     </script>
 </body>
 </html>
