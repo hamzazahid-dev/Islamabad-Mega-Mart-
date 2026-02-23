@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Islamabad Mega Mart | enhanced checkout</title>
-    <!-- Font Awesome icons (free) -->
+    <title>Islamabad Mega Mart | fresh mart</title>
+    <!-- Font Awesome icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -112,7 +112,6 @@
             box-shadow: 0 8px 18px rgba(42,110,58,0.15);
         }
 
-        /* filter row */
         .filter-row {
             max-width: 1300px;
             margin: 15px auto 5px;
@@ -233,19 +232,16 @@
             border-radius: 16px;
             margin-bottom: 12px;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             font-weight: bold;
             text-align: center;
-            padding: 10px;
             color: white;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            transition: transform 0.2s;
-        }
-        .product-card:hover .product-image {
-            transform: scale(1.02);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
         .status-chip {
@@ -324,7 +320,6 @@
             color: white;
         }
 
-        /* ========== ENHANCED CART + ADDRESS + PAYMENT ========== */
         .cart-panel {
             background: white;
             border-radius: 32px;
@@ -421,7 +416,6 @@
             color: #1d4a2b;
         }
 
-        /* ---------- ADDRESS PROFILE (saved location) ---------- */
         .address-profile {
             background: #f5fbf5;
             border-radius: 24px;
@@ -469,7 +463,7 @@
             margin-bottom: 12px;
             flex-wrap: wrap;
         }
-        .addr-row input, .addr-row select {
+        .addr-row input {
             flex: 1 1 130px;
             padding: 14px 16px;
             border: 1px solid #c0dcc0;
@@ -478,13 +472,12 @@
             font-size: 0.9rem;
             transition: 0.15s;
         }
-        .addr-row input:focus, .addr-row select:focus {
+        .addr-row input:focus {
             outline: none;
             border-color: #2a6e3a;
             box-shadow: 0 0 0 3px rgba(42,110,58,0.2);
         }
 
-        /* toggle between shipping / billing */
         .address-tabs {
             display: flex;
             gap: 10px;
@@ -510,7 +503,6 @@
             border-top: 1px dashed #bcd8bc;
         }
 
-        /* delivery estimate */
         .delivery-estimate {
             background: #e8f0fe;
             border-radius: 30px;
@@ -527,7 +519,6 @@
             font-size: 1.4rem;
         }
 
-        /* payment methods */
         .payment-methods {
             background: white;
             border-radius: 24px;
@@ -688,7 +679,7 @@
             <h1>
                 <i class="fas fa-leaf"></i> Islamabad Mega Mart
             </h1>
-            <div class="badge"><i class="fas fa-check-circle"></i> 100+ items • fast delivery</div>
+            <div class="badge"><i class="fas fa-check-circle"></i> 30+ items • your own image added</div>
         </div>
     </div>
 
@@ -697,16 +688,13 @@
             <i class="fas fa-search"></i>
             <input type="text" id="searchBar" placeholder="Search products...">
         </div>
-        <!-- category nav -->
         <nav id="cat-nav"></nav>
-        <!-- extra filter row for price/low stock -->
         <div class="filter-row" id="filterRow"></div>
     </div>
 
     <div class="main-layout">
         <div class="product-grid" id="product-grid"></div>
 
-        <!-- ========== ENHANCED CART SIDEBAR ========== -->
         <div class="cart-panel" id="cart-sidebar">
             <button class="close-cart-mob" onclick="toggleCart()"><i class="fas fa-arrow-left"></i> Continue shopping</button>
             <div class="cart-header">
@@ -715,7 +703,6 @@
             </div>
             <div class="cart-items" id="cart-content">🛒 Your basket is empty</div>
 
-            <!-- SAVED LOCATION PROFILE -->
             <div class="address-profile">
                 <div class="profile-header">
                     <span><i class="fas fa-map-pin"></i> Your saved location</span>
@@ -725,13 +712,11 @@
                     <i class="fas fa-check-circle" style="color:#2a6e3a;"></i> 
                     <span id="savedAddressText"></span>
                 </div>
-                <!-- address toggles for shipping / billing -->
                 <div class="address-tabs">
                     <span class="addr-tab active" onclick="showAddressTab('shipping')">Shipping</span>
                     <span class="addr-tab" onclick="showAddressTab('billing')">Billing</span>
                 </div>
 
-                <!-- SHIPPING ADDRESS (editable) -->
                 <div id="shippingSection" class="shipping-section">
                     <div style="font-weight:600; margin-bottom:8px;">📍 Shipping address</div>
                     <div class="addr-row">
@@ -744,7 +729,6 @@
                     </div>
                 </div>
 
-                <!-- BILLING ADDRESS (editable, can copy from shipping) -->
                 <div id="billingSection" class="billing-section" style="display:none;">
                     <div style="font-weight:600; margin-bottom:8px;">🧾 Billing address</div>
                     <div class="addr-row">
@@ -763,7 +747,6 @@
                 </div>
             </div>
 
-            <!-- DELIVERY ESTIMATE (based on time) -->
             <div class="delivery-estimate" id="deliveryEstimate">
                 <i class="fas fa-truck"></i>
                 <div>
@@ -772,7 +755,6 @@
                 </div>
             </div>
 
-            <!-- PAYMENT METHODS (visual only, order goes to WhatsApp) -->
             <div class="payment-methods">
                 <div class="payment-title"><i class="fas fa-credit-card"></i> Pay via</div>
                 <label class="payment-option">
@@ -804,7 +786,7 @@
         const MY_PHONE = "923238553161";
         const DELIVERY_FEE = 50; 
 
-        // ---------- HELPER FUNCTIONS FOR UNIQUE IMAGES (same as before) ----------
+        // ----- Product emoji map for fallback (same as before) -----
         const productEmojis = {
             'Sunridge Fortified Atta': '🌾', 'Chakki Fresh Atta': '🔄', 'Whole Wheat Atta': '🍞',
             'Multigrain Atta': '🌽', 'Bajra Atta': '🌿', 'Makai Atta': '🌽',
@@ -840,66 +822,85 @@
             'Dishwashing Liquid': '🧽', 'Cleaning Sponges': '🧼', 'Salt': '🧂',
             'Sugar': '🍬', 'Cornflour': '🌽'
         };
+        
         function getProductEmoji(name) {
             for (let k in productEmojis) if (name.includes(k)) return productEmojis[k];
             return '📦';
         }
+        
         function getUniqueProductColor(id) {
             let hue = (id * 37) % 360;
             let sat = 65 + (id % 30);
             let light = 45 + (id % 20);
             return `hsl(${hue}, ${sat}%, ${light}%)`;
         }
+        
         function getProductImageStyle(p) {
             let base = getUniqueProductColor(p.id);
             let darker = `hsl(${(p.id*37)%360}, ${65+(p.id%30)}%, ${35+(p.id%15)}%)`;
             return {
                 background: `linear-gradient(135deg, ${base}, ${darker})`,
-                emoji: getProductEmoji(p.name),
-                shortName: p.name.split(' ').slice(0,2).join(' ')
+                emoji: getProductEmoji(p.name)
             };
         }
 
-        // ---------- FULL INVENTORY (shortened for brevity, but keep at least 20 items) ----------
+        // ----- REAL IMAGE MAPPING (you uploaded Sunridge Atta) -----
+        function getProductImageHtml(product) {
+            // Map product IDs to your uploaded image filenames (relative path)
+            const imageMap = {
+                1: 'images/Fortified-Chakki-ATTA-10KG.png'  // Sunridge Atta – your uploaded file
+                // add more lines like  2: 'images/chakki-atta.jpg',   etc.
+            };
+            
+            const imagePath = imageMap[product.id];
+            if (imagePath) {
+                // real image exists
+                return `<img src="${imagePath}" alt="${product.name}" class="product-image" style="object-fit: cover;" onerror="this.onerror=null; this.style.display='none'; this.parentNode.innerHTML='<div class=\'product-image\' style=\'background:${getProductImageStyle(product).background}\'>${getProductImageStyle(product).emoji}</div>';">`;
+            } else {
+                // fallback coloured placeholder
+                let style = getProductImageStyle(product);
+                return `<div class="product-image" style="${style.background}; display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">${style.emoji}</div>`;
+            }
+        }
+
+        // ----- Inventory (simplified to 30 items, but first is Sunridge) -----
         const inventory = [
-            {id:1,name:"Sunridge Fortified Atta (10kg)",price:1180,cat:"Staples",limit:false},
-            {id:2,name:"Chakki Fresh Atta (10kg)",price:1050,cat:"Staples",limit:false},
-            {id:3,name:"Whole Wheat Atta (10kg)",price:1120,cat:"Staples",limit:false},
-            {id:4,name:"Multigrain Atta (5kg)",price:620,cat:"Staples",limit:true},
-            {id:5,name:"Bajra Atta (2kg)",price:240,cat:"Staples",limit:false},
-            {id:6,name:"Makai Atta (2kg)",price:260,cat:"Staples",limit:false},
-            {id:7,name:"Chana Besan (1kg)",price:220,cat:"Staples",limit:false},
-            {id:8,name:"Shaheen Atta (10kg)",price:1000,cat:"Staples",limit:false},
-            {id:9,name:"White Flour Maida (2kg)",price:210,cat:"Staples",limit:false},
-            {id:10,name:"Sugar (1kg)",price:175,cat:"Staples",limit:true},
-            {id:11,name:"Basmati Rice (1kg)",price:360,cat:"Staples",limit:false},
-            {id:12,name:"Super Basmati Rice (5kg)",price:1550,cat:"Staples",limit:false},
-            {id:13,name:"Sela Rice (5kg)",price:980,cat:"Staples",limit:false},
-            {id:14,name:"Moong Pulse (1kg)",price:290,cat:"Staples",limit:false},
-            {id:15,name:"Mash Pulse (1kg)",price:380,cat:"Staples",limit:false},
-            {id:16,name:"Chana Pulse (1kg)",price:240,cat:"Staples",limit:false},
-            {id:17,name:"Masoor Pulse (1kg)",price:270,cat:"Staples",limit:false},
-            {id:18,name:"Rajma 500g",price:330,cat:"Staples",limit:false},
-            {id:19,name:"Salt (1kg)",price:60,cat:"Staples",limit:false},
-            {id:20,name:"Cornflour 500g",price:180,cat:"Staples",limit:false},
-            {id:21,name:"Dalda Oil 1L",price:590,cat:"Oil",limit:true},
-            {id:22,name:"Seasons Canola 1L",price:585,cat:"Oil",limit:false},
-            {id:23,name:"Kissan Ghee 1kg",price:650,cat:"Oil",limit:false},
-            {id:24,name:"Olive Oil 500ml",price:850,cat:"Oil",limit:true},
-            {id:25,name:"Pakola Lychee 750ml",price:140,cat:"Drinks",limit:false},
-            {id:26,name:"Pakola Orange 750ml",price:140,cat:"Drinks",limit:false},
-            {id:27,name:"Pepsi 1.5L",price:210,cat:"Drinks",limit:false},
-            {id:28,name:"Lays Masala (12p)",price:580,cat:"Snacks",limit:false},
-            {id:29,name:"Daddy Nimko 500g",price:350,cat:"Snacks",limit:false},
-            {id:30,name:"Surf Excel 1kg",price:670,cat:"Household",limit:false}
+            { id: 1, name: "Sunridge Fortified Atta (10kg)", price: 1180, cat: "Staples", limit: false },
+            { id: 2, name: "Chakki Fresh Atta (10kg)", price: 1050, cat: "Staples", limit: false },
+            { id: 3, name: "Whole Wheat Atta (10kg)", price: 1120, cat: "Staples", limit: false },
+            { id: 4, name: "Multigrain Atta (5kg)", price: 620, cat: "Staples", limit: true },
+            { id: 5, name: "Bajra Atta (2kg)", price: 240, cat: "Staples", limit: false },
+            { id: 6, name: "Makai Atta (2kg)", price: 260, cat: "Staples", limit: false },
+            { id: 7, name: "Chana Besan (1kg)", price: 220, cat: "Staples", limit: false },
+            { id: 8, name: "Shaheen Atta (10kg)", price: 1000, cat: "Staples", limit: false },
+            { id: 9, name: "Basmati Rice (1kg)", price: 360, cat: "Staples", limit: false },
+            { id: 10, name: "Super Basmati (5kg)", price: 1550, cat: "Staples", limit: false },
+            { id: 11, name: "Moong Pulse (1kg)", price: 290, cat: "Staples", limit: false },
+            { id: 12, name: "Mash Pulse (1kg)", price: 380, cat: "Staples", limit: false },
+            { id: 13, name: "Dalda Oil 1L", price: 590, cat: "Oil", limit: true },
+            { id: 14, name: "Seasons Canola 1L", price: 585, cat: "Oil", limit: false },
+            { id: 15, name: "Kissan Ghee 1kg", price: 650, cat: "Oil", limit: false },
+            { id: 16, name: "Olive Oil 500ml", price: 850, cat: "Oil", limit: true },
+            { id: 17, name: "Chicken Meat 1kg", price: 770, cat: "Meat", limit: false },
+            { id: 18, name: "Beef Boneless 1kg", price: 1500, cat: "Meat", limit: false },
+            { id: 19, name: "Fresh Eggs (Dozen)", price: 300, cat: "Dairy", limit: true },
+            { id: 20, name: "Olper's Milk 1L", price: 370, cat: "Dairy", limit: false },
+            { id: 21, name: "Pakola Lychee 750ml", price: 140, cat: "Drinks", limit: false },
+            { id: 22, name: "Pakola Orange 750ml", price: 140, cat: "Drinks", limit: false },
+            { id: 23, name: "Pepsi 1.5L", price: 210, cat: "Drinks", limit: false },
+            { id: 24, name: "Lays Masala (12p)", price: 580, cat: "Snacks", limit: false },
+            { id: 25, name: "Daddy Nimko 500g", price: 350, cat: "Snacks", limit: false },
+            { id: 26, name: "Kurkure (family)", price: 250, cat: "Snacks", limit: false },
+            { id: 27, name: "Surf Excel 1kg", price: 670, cat: "Household", limit: false },
+            { id: 28, name: "Vim Liquid 500ml", price: 230, cat: "Household", limit: false },
+            { id: 29, name: "Trash Bags 20pcs", price: 190, cat: "Household", limit: false },
+            { id: 30, name: "Aluminium Foil 10m", price: 320, cat: "Household", limit: false }
         ];
 
         let cart = {};
         let activeCat = "All";
-        let priceFilter = "all"; // "all", "low", "high"
-        let savedAddress = null;  // stored default
+        let priceFilter = "all";
 
-        // ---- filter chips ----
         function renderFilterChips() {
             let fdiv = document.getElementById('filterRow');
             fdiv.innerHTML = `
@@ -915,7 +916,6 @@
             filterItems();
         }
 
-        // ---- category init ----
         function init() {
             let cats = ["All", ...new Set(inventory.map(i=>i.cat))];
             document.getElementById('cat-nav').innerHTML = cats.map(c=> 
@@ -924,6 +924,11 @@
             renderFilterChips();
             setCat("All");
             updateDeliveryEstimate();
+            setInterval(updateDeliveryEstimate, 60000);
+            loadSavedAddressToShipping();
+            displaySavedAddress();
+            document.getElementById('copyShipping').checked = true;
+            copyShippingToBilling();
         }
 
         function setCat(c) {
@@ -938,33 +943,27 @@
             let filtered = inventory.filter(i => 
                 (activeCat==="All" || i.cat===activeCat) && i.name.toLowerCase().includes(query)
             );
-            // price filter
             if (priceFilter === 'low') filtered = filtered.filter(i => i.price < 500);
             if (priceFilter === 'high') filtered = filtered.filter(i => i.price >= 500);
             renderGrid(filtered);
         }
 
         function renderGrid(items) {
-            let grid = document.getElementById('product-grid');
+            const grid = document.getElementById('product-grid');
             grid.innerHTML = items.map(p => {
-                let img = getProductImageStyle(p);
-                let brandMatch = p.name.match(/\(([^)]+)\)/);
-                let brand = brandMatch ? brandMatch[1] : '';
-                return `<div class="product-card">
-                    <div class="product-image" style="${img.background}">
-                        <div style="font-size:2.5rem;">${img.emoji}</div>
-                        <div style="font-weight:bold;font-size:0.9rem;background:rgba(0,0,0,0.3);padding:3px 8px;border-radius:20px;">${img.shortName}</div>
-                        ${brand?`<div style="font-size:0.7rem;">${brand}</div>`:''}
-                    </div>
+                const brandMatch = p.name.match(/\(([^)]+)\)/);
+                const brand = brandMatch ? brandMatch[1] : '';
+                return `
+                <div class="product-card">
+                    ${getProductImageHtml(p)}
                     <span class="status-chip ${p.limit?'limited':'in-stock'}">${p.limit?'⚠️ limited':'✅ in stock'}</span>
                     <h3>${p.name}</h3>
                     <div class="price-tag">₨${p.price}</div>
                     <button class="add-to-cart" onclick="updateQty(${p.id},1)"><i class="fas fa-plus-circle"></i> Add</button>
-                </div>`;
-            }).join('');
+                </div>
+            `}).join('');
         }
 
-        // ---- cart functions ----
         function updateQty(id, change) {
             if (!cart[id]) cart[id] = 0;
             cart[id] += change;
@@ -997,7 +996,6 @@
             document.getElementById('total-val').innerText = (sub+DELIVERY_FEE).toLocaleString();
         }
 
-        // ---- address save / load ----
         function saveCurrentAddress() {
             let shipHouse = document.getElementById('shipHouse').value.trim();
             let shipStreet = document.getElementById('shipStreet').value.trim();
@@ -1007,8 +1005,8 @@
                 alert('Please fill shipping address first');
                 return;
             }
-            savedAddress = { house: shipHouse, street: shipStreet, sector: shipSector, city: shipCity };
-            localStorage.setItem('savedAddress', JSON.stringify(savedAddress));
+            let saved = { house: shipHouse, street: shipStreet, sector: shipSector, city: shipCity };
+            localStorage.setItem('savedAddress', JSON.stringify(saved));
             displaySavedAddress();
         }
 
@@ -1034,7 +1032,6 @@
             }
         }
 
-        // ---- address tabs ----
         function showAddressTab(tab) {
             document.querySelectorAll('.addr-tab').forEach(t=>t.classList.remove('active'));
             if (tab==='shipping') {
@@ -1057,19 +1054,15 @@
             }
         }
 
-        // ---- delivery estimate ----
         function updateDeliveryEstimate() {
             let now = new Date();
             let hours = now.getHours();
-            let mins = now.getMinutes();
             let estimate = 'today (within 2h)';
             if (hours >= 21 || hours < 8) estimate = 'tomorrow morning (by 10am)';
             else if (hours > 14) estimate = 'today (by 6pm)';
             document.getElementById('deliveryDate').innerText = estimate;
         }
-        setInterval(updateDeliveryEstimate, 60000); // update every minute
 
-        // ---- send order (WhatsApp) with full details ----
         function sendOrder() {
             let ids = Object.keys(cart);
             if (!ids.length) return alert('Basket empty');
@@ -1105,20 +1098,11 @@
             window.open(`https://wa.me/${MY_PHONE}?text=${encodeURIComponent(msg)}`,'_blank');
         }
 
-        // toggle cart for mobile
         function toggleCart() {
             document.getElementById('cart-sidebar').classList.toggle('active');
         }
 
-        // load saved address on start
-        window.onload = function() {
-            init();
-            loadSavedAddressToShipping();
-            displaySavedAddress();
-            // also set billing same as shipping default checkbox
-            document.getElementById('copyShipping').checked = true;
-            copyShippingToBilling();
-        };
+        window.onload = init;
     </script>
 </body>
-</html>
+            </html>
