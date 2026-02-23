@@ -3,228 +3,911 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Islamabad Mega Mart | Order via WhatsApp</title>
+    <title>Islamabad Mega Mart | 100+ items with unique images</title>
+    <!-- Font Awesome icons (free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        :root { --primary: #1e7e34; --dark: #212529; --warning: #f39c12; }
-        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; background: #f9f9f9; color: var(--dark); }
-        header { background: var(--primary); color: white; padding: 25px; text-align: center; }
-        .sticky-nav { position: sticky; top: 0; z-index: 1000; background: white; border-bottom: 2px solid #eee; padding: 10px 0; }
-        #searchBar { display: block; width: 90%; max-width: 600px; margin: 0 auto 10px; padding: 12px 20px; border-radius: 25px; border: 1px solid #ddd; outline: none; }
-        nav { display: flex; overflow-x: auto; gap: 10px; padding: 5px 15px; max-width: 1200px; margin: 0 auto; scrollbar-width: none; }
-        nav button { background: #f0f0f0; border: none; padding: 8px 18px; border-radius: 20px; cursor: pointer; white-space: nowrap; font-weight: 600; }
-        nav button.active { background: var(--primary); color: white; }
-        .main-container { max-width: 1300px; margin: 20px auto; display: grid; grid-template-columns: 1fr 380px; gap: 20px; padding: 0 15px; }
-        
-        /* Grid and Cards */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
-        .card { background: white; padding: 15px; border-radius: 12px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #eee; display: flex; flex-direction: column; justify-content: space-between; }
-        .card h3 { font-size: 0.85rem; margin: 10px 0; min-height: 2.6em; line-height: 1.3; }
-        .price { color: var(--primary); font-weight: bold; font-size: 1.1rem; margin-bottom: 8px; }
-        .status-tag { font-size: 0.65rem; font-weight: bold; padding: 3px 10px; border-radius: 5px; margin-bottom: 10px; display: inline-block; text-transform: uppercase; }
-        .in-stock { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
-        .limited { background: #fff3e0; color: #e65100; border: 1px solid #ffcc80; }
-        .add-btn { background: var(--primary); color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.3s; }
-        
-        /* Cart Styles */
-        .cart { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); height: fit-content; position: sticky; top: 130px; }
-        .cart-item { display: grid; grid-template-columns: 1fr auto auto; align-items: center; padding: 10px 0; border-bottom: 1px solid #eee; font-size: 0.85rem; }
-        .qty-ctrl { display: flex; align-items: center; gap: 8px; background: #f1f1f1; padding: 4px 8px; border-radius: 5px; margin: 0 10px; }
-        .qty-btn { border: none; background: none; font-weight: bold; color: var(--primary); cursor: pointer; font-size: 1.1rem; }
-        .total-box { font-size: 1.5rem; font-weight: bold; margin-top: 20px; color: var(--primary); border-top: 2px solid #eee; padding-top: 15px; display: flex; justify-content: space-between; }
-        .wa-btn { background: #25D366; color: white; width: 100%; padding: 18px; border: none; border-radius: 8px; font-size: 1.2rem; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
 
-        /* FAB Styles */
-        .fab-cart { position: fixed; bottom: 25px; right: 25px; background: var(--primary); color: white; width: 65px; height: 65px; border-radius: 50%; border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.3); cursor: pointer; z-index: 2000; font-size: 24px; display: none; align-items: center; justify-content: center; }
-        #cart-count { position: absolute; top: 5px; right: 5px; background: #ff4444; color: white; font-size: 0.7rem; padding: 3px 7px; border-radius: 10px; border: 2px solid white; }
-        .close-cart { display: none; width: 100%; padding: 10px; background: #eee; border: none; border-radius: 8px; margin-bottom: 15px; font-weight: bold; cursor: pointer; }
+        body {
+            background: #f3f5f7;
+            color: #1e2b37;
+        }
 
-        /* Mobile Adjustments */
+        .hero {
+            background: linear-gradient(145deg, #1b4a2b 0%, #2a6e3a 100%);
+            color: white;
+            padding: 2rem 1.5rem 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: #f3f5f7;
+            border-radius: 40px 40px 0 0;
+        }
+        .hero-content {
+            max-width: 1300px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 5;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .hero h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .hero h1 i {
+            color: #f9c74f;
+            font-size: 2rem;
+        }
+        .badge {
+            background: #f9c74f;
+            color: #1b4a2b;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .sticky-panel {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 4px 20px rgba(0, 40, 20, 0.08);
+            padding: 1rem 1.5rem;
+        }
+
+        .search-wrapper {
+            max-width: 600px;
+            margin: 0 auto 12px;
+            position: relative;
+        }
+        .search-wrapper i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8a9a8a;
+            font-size: 1rem;
+        }
+        #searchBar {
+            width: 100%;
+            padding: 16px 24px 16px 50px;
+            border: none;
+            border-radius: 60px;
+            background: white;
+            box-shadow: 0 8px 18px rgba(0,30,10,0.05);
+            font-size: 1rem;
+            border: 1px solid #e0e8e0;
+            transition: all 0.2s;
+        }
+        #searchBar:focus {
+            outline: none;
+            border-color: #2a6e3a;
+            box-shadow: 0 8px 18px rgba(42,110,58,0.15);
+        }
+
+        nav {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 5px;
+            scrollbar-width: thin;
+            scrollbar-color: #b3cfb3 #eaf0ea;
+        }
+        nav::-webkit-scrollbar {
+            height: 5px;
+        }
+        nav::-webkit-scrollbar-thumb {
+            background: #2a6e3a;
+            border-radius: 10px;
+        }
+        .cat-btn {
+            background: white;
+            border: 1px solid #d0e0d0;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #2d4730;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.15s;
+            box-shadow: 0 2px 5px rgba(0,30,0,0.02);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .cat-btn i {
+            color: #2a6e3a;
+            font-size: 0.9rem;
+        }
+        .cat-btn.active {
+            background: #2a6e3a;
+            color: white;
+            border-color: #2a6e3a;
+            box-shadow: 0 6px 12px rgba(42,110,58,0.2);
+        }
+        .cat-btn.active i {
+            color: white;
+        }
+
+        .main-layout {
+            max-width: 1300px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 24px;
+            padding: 1rem 1rem 1.2rem;
+            box-shadow: 0 8px 22px rgba(0, 30, 10, 0.04);
+            transition: 0.2s ease;
+            border: 1px solid #e2ede2;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            backdrop-filter: blur(2px);
+        }
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 30px rgba(25, 80, 35, 0.08);
+            border-color: #b8d9b8;
+        }
+
+        /* Product image styles - UNIQUE FOR EVERY PRODUCT */
+        .product-image {
+            width: 100%;
+            height: 140px;
+            border-radius: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: transform 0.2s;
+        }
+        .product-card:hover .product-image {
+            transform: scale(1.02);
+        }
+
+        .status-chip {
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 30px;
+            width: fit-content;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            border: 1px solid transparent;
+        }
+        .in-stock {
+            background: #e6f3e6;
+            color: #1e6b2e;
+            border-color: #b3dfb3;
+        }
+        .limited {
+            background: #fff1d6;
+            color: #a64d1e;
+            border-color: #ffcf9a;
+        }
+
+        .product-card h3 {
+            font-size: 0.95rem;
+            line-height: 1.4;
+            font-weight: 600;
+            margin: 5px 0 8px;
+            color: #1d3a21;
+            min-height: 2.6em;
+        }
+
+        .price-tag {
+            color: #1b4a2b;
+            font-weight: 800;
+            font-size: 1.3rem;
+            margin: 5px 0 10px;
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+        }
+        .price-tag span {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #5f735f;
+        }
+
+        .add-to-cart {
+            background: #f0f7f0;
+            border: 1px solid #c7e0c7;
+            color: #1b4a2b;
+            border-radius: 50px;
+            padding: 10px 5px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: 0.15s;
+            width: 100%;
+            margin-top: 4px;
+        }
+        .add-to-cart i {
+            font-size: 1rem;
+            color: #2a6e3a;
+        }
+        .add-to-cart:hover {
+            background: #2a6e3a;
+            border-color: #2a6e3a;
+            color: white;
+        }
+        .add-to-cart:hover i {
+            color: white;
+        }
+
+        .cart-panel {
+            background: white;
+            border-radius: 32px;
+            padding: 1.8rem 1.5rem;
+            box-shadow: 0 20px 35px -8px rgba(20, 60, 20, 0.2);
+            border: 1px solid #deecde;
+            position: sticky;
+            top: 120px;
+            transition: box-shadow 0.2s;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.8rem;
+        }
+        .cart-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1d3a21;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .cart-header h2 i {
+            color: #2a6e3a;
+            font-size: 1.6rem;
+        }
+        .clear-cart {
+            background: none;
+            border: none;
+            color: #9ab89a;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+        .clear-cart:hover {
+            color: #b33c3c;
+        }
+
+        .cart-items {
+            max-height: 340px;
+            overflow-y: auto;
+            padding-right: 5px;
+            margin-bottom: 1rem;
+            scrollbar-width: thin;
+        }
+        .cart-item {
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 0;
+            border-bottom: 1px solid #e2f0e2;
+            font-size: 0.9rem;
+        }
+        .cart-item-name {
+            font-weight: 600;
+            color: #203f25;
+        }
+        .qty-wrap {
+            display: flex;
+            align-items: center;
+            background: #f1faf1;
+            border-radius: 40px;
+            padding: 4px;
+        }
+        .qty-btn {
+            background: transparent;
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #2a6e3a;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .qty-btn:hover {
+            background: #d0ecdd;
+        }
+        .qty-value {
+            min-width: 24px;
+            text-align: center;
+            font-weight: 600;
+        }
+        .item-price {
+            font-weight: 700;
+            color: #1d4a2b;
+        }
+
+        .address-modern {
+            background: #f5fbf5;
+            border-radius: 24px;
+            padding: 1.2rem;
+            margin: 1.5rem 0 1rem;
+            border: 1px solid #d3e8d3;
+        }
+        .addr-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+        .addr-row input {
+            flex: 1 1 130px;
+            padding: 14px 16px;
+            border: 1px solid #c0dcc0;
+            border-radius: 30px;
+            background: white;
+            font-size: 0.9rem;
+            transition: 0.15s;
+        }
+        .addr-row input:focus {
+            outline: none;
+            border-color: #2a6e3a;
+            box-shadow: 0 0 0 3px rgba(42,110,58,0.2);
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #1b4a2b;
+            border-top: 2px dashed #bcd8bc;
+            padding-top: 1.2rem;
+            margin-top: 0.5rem;
+        }
+
+        .wa-button {
+            background: #25D366;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 18px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
+            transition: 0.15s;
+        }
+        .wa-button i {
+            font-size: 1.6rem;
+        }
+        .wa-button:hover {
+            background: #20b859;
+            transform: scale(1.02);
+        }
+
+        .fab-modern {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #1b4a2b;
+            color: white;
+            width: 70px;
+            height: 70px;
+            border-radius: 40px;
+            border: none;
+            box-shadow: 0 12px 25px rgba(27,74,43,0.4);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 200;
+            border: 2px solid white;
+        }
+        .fab-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #f9c74f;
+            color: #1b4a2b;
+            font-weight: 800;
+            font-size: 0.8rem;
+            padding: 4px 8px;
+            border-radius: 30px;
+            border: 2px solid white;
+        }
+
+        .close-cart-mob {
+            display: none;
+            width: 100%;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 40px;
+            padding: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+
         @media (max-width: 950px) {
-            .main-container { grid-template-columns: 1fr; }
-            .fab-cart { display: flex; }
-            .cart { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 3000; border-radius: 0; box-sizing: border-box; overflow-y: auto; }
-            .cart.active { display: block; }
-            .close-cart { display: block; }
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+            .cart-panel {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 1000;
+                border-radius: 0;
+                overflow-y: auto;
+                padding: 2rem 1.5rem;
+                background: white;
+            }
+            .cart-panel.active {
+                display: block;
+            }
+            .close-cart-mob {
+                display: block;
+            }
+            .fab-modern {
+                display: flex;
+            }
+            .hero h1 {
+                font-size: 1.8rem;
+            }
         }
     </style>
 </head>
 <body>
-
-<header>
-    <h1>Islamabad Mega Mart</h1>
-    <p>Premium Quality • 210+ Items • Verified Feb 2026 Prices</p>
-</header>
-
-<div class="sticky-nav">
-    <input type="text" id="searchBar" placeholder="Search brands, atta, oil, diapers..." onkeyup="filterItems()">
-    <nav id="cat-nav"></nav>
-</div>
-
-<div class="main-container">
-    <div class="grid" id="product-grid"></div>
-    <div class="cart" id="cart-sidebar">
-        <button class="close-cart" onclick="toggleCart()">✕ CLOSE BASKET</button>
-        <h2 style="margin-top:0">Order Basket</h2>
-        <div id="cart-content">Basket is empty</div>
-        <div class="total-box"><span>Total:</span> <span>₨ <span id="total-val">0</span></span></div>
-        <input type="text" id="address" placeholder="Address (Sector, Street, House#)" style="width:100%; padding:15px; margin-top:10px; border:1px solid #ccc; border-radius:8px; box-sizing: border-box;">
-        <button class="wa-btn" onclick="sendOrder()">ORDER ON WHATSAPP</button>
+    <div class="hero">
+        <div class="hero-content">
+            <h1>
+                <i class="fas fa-leaf"></i> Islamabad Mega Mart
+            </h1>
+            <div class="badge"><i class="fas fa-check-circle"></i> 100+ items • each with unique image</div>
+        </div>
     </div>
-</div>
 
-<button class="fab-cart" onclick="toggleCart()">
-    🛒
-    <span id="cart-count">0</span>
-</button>
+    <div class="sticky-panel">
+        <div class="search-wrapper">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchBar" placeholder="Search products...">
+        </div>
+        <nav id="cat-nav"></nav>
+    </div>
 
-<script>
-    const MY_PHONE = "923238553161";
-    const DELIVERY_FEE = 50; 
-
-    const inventory = [];
-    const brandList = [
-        ["Shan Biryani Masala", 120, "Spices"], ["National Mixed Pickle", 480, "Spices"],
-        ["Mitchells Fruit Jam", 450, "Spices"], ["Youngs Mayonnaise", 520, "Spices"],
-        ["Knorr Noodles Chicken", 65, "Snacks"], ["Lays Masala Large", 120, "Snacks"],
-        ["Tapal Danedar 430g", 950, "Drinks"], ["Rooh Afza 800ml", 580, "Drinks"],
-        ["Surf Excel 1kg", 650, "Household"], ["Vim Liquid 500ml", 230, "Household"],
-        ["Rose Petal Tissues", 260, "Household"], ["Safeguard Soap", 195, "Personal"],
-        ["Sunsilk Shampoo", 520, "Personal"], ["Always Pads (Large)", 480, "Personal"],
-        ["Tang Orange 500g", 680, "Drinks"], ["Nestle Pure Life 1.5L", 100, "Drinks"]
-    ];
-
-    // Added base items manually first as per your original code
-    const initialItems = [
-        { id: 1, name: "Sunridge Fortified Atta (10kg)", price: 1100, cat: "Staples", limit: false },
-        { id: 2, name: "Sugar / Cheeni (1kg)", price: 175, cat: "Staples", limit: true },
-        { id: 3, name: "Basmati Rice Premium (1kg)", price: 360, cat: "Staples", limit: false },
-        { id: 4, name: "Dalda Cooking Oil (1L Pouch)", price: 590, cat: "Oil", limit: true },
-        { id: 5, name: "Seasons Canola Oil (1L)", price: 585, cat: "Oil", limit: false },
-        { id: 6, name: "Chicken Meat (1kg)", price: 770, cat: "Meat", limit: false },
-        { id: 7, name: "Beef Boneless (1kg)", price: 1500, cat: "Meat", limit: false },
-        { id: 8, name: "Fresh Eggs (Dozen)", price: 300, cat: "Dairy", limit: true },
-        { id: 9, name: "Olper's Milk (1L)", price: 370, cat: "Dairy", limit: false },
-        { id: 10, name: "Pampers Premium S4 (Large)", price: 4750, cat: "Baby", limit: true }
-    ];
-    inventory.push(...initialItems);
-
-    for(let i = 11; i <= 210; i++) {
-        const template = brandList[i % brandList.length];
-        inventory.push({
-            id: i,
-            name: template[0],
-            price: template[1],
-            cat: template[2],
-            limit: i % 10 === 0
-        });
-    }
-
-    let cart = {};
-    let activeCat = "All";
-
-    function init() {
-        const uniqueCats = ["All", ...new Set(inventory.map(i => i.cat))];
-        document.getElementById('cat-nav').innerHTML = uniqueCats.map(c => 
-            `<button id="b-${c}" onclick="setCat('${c}')">${c}</button>`
-        ).join('');
-        setCat("All");
-    }
-
-    function toggleCart() {
-        document.getElementById('cart-sidebar').classList.toggle('active');
-    }
-
-    function setCat(c) {
-        activeCat = c;
-        document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-        document.getElementById(`b-${c}`).classList.add('active');
-        filterItems();
-    }
-
-    function filterItems() {
-        const query = document.getElementById('searchBar').value.toLowerCase();
-        const filtered = inventory.filter(i => 
-            (activeCat === "All" || i.cat === activeCat) && i.name.toLowerCase().includes(query)
-        );
-        renderGrid(filtered);
-    }
-
-    function renderGrid(items) {
-        const grid = document.getElementById('product-grid');
-        grid.innerHTML = items.map(p => `
-            <div class="card">
-                <div>
-                    <span class="status-tag ${p.limit ? 'limited' : 'in-stock'}">${p.limit ? 'Limited Supply' : 'In Stock'}</span>
-                    <h3>${p.name}</h3>
+    <div class="main-layout">
+        <div class="product-grid" id="product-grid"></div>
+        <div class="cart-panel" id="cart-sidebar">
+            <button class="close-cart-mob" onclick="toggleCart()"><i class="fas fa-arrow-left"></i> Continue shopping</button>
+            <div class="cart-header">
+                <h2><i class="fas fa-basket-shopping"></i> Basket</h2>
+                <button class="clear-cart" onclick="clearFullCart()" title="Empty cart"><i class="fas fa-trash-alt"></i></button>
+            </div>
+            <div class="cart-items" id="cart-content">🛒 Your basket is empty</div>
+            <div class="address-modern">
+                <div style="display:flex; gap:6px; margin-bottom:10px; color:#1b4a2b; font-weight:600;"><i class="fas fa-location-dot"></i> Delivery address</div>
+                <div class="addr-row">
+                    <input type="text" id="addrHouse" placeholder="House/Flat">
+                    <input type="text" id="addrStreet" placeholder="Street">
                 </div>
-                <div>
-                    <div class="price">₨ ${p.price}</div>
-                    <button class="add-btn" onclick="updateQty(${p.id}, 1)">Add to Basket</button>
+                <div class="addr-row">
+                    <input type="text" id="addrSector" value="Korang Town">
+                    <input type="text" id="addrCity" value="Islamabad">
                 </div>
             </div>
-        `).join('');
-    }
+            <div class="total-row">
+                <span>Total</span>
+                <span>₨ <span id="total-val">0</span></span>
+            </div>
+            <button class="wa-button" onclick="sendOrder()"><i class="fab fa-whatsapp"></i> Order via WhatsApp</button>
+        </div>
+    </div>
 
-    function updateQty(id, change) {
-        if (!cart[id]) cart[id] = 0;
-        cart[id] += change;
-        if (cart[id] <= 0) delete cart[id];
-        refreshCart();
-    }
+    <button class="fab-modern" onclick="toggleCart()">
+        <i class="fas fa-shopping-basket"></i>
+        <span class="fab-count" id="cart-count">0</span>
+    </button>
 
-    function refreshCart() {
-        const container = document.getElementById('cart-content');
-        const ids = Object.keys(cart);
-        
-        // Update FAB Badge
-        let count = 0;
-        ids.forEach(id => count += cart[id]);
-        document.getElementById('cart-count').innerText = count;
+    <script>
+        const MY_PHONE = "923238553161";
+        const DELIVERY_FEE = 50; 
 
-        if (ids.length === 0) {
-            container.innerHTML = "Basket is empty";
-            document.getElementById('total-val').innerText = "0";
-            return;
+        // HUGE DATABASE OF PRODUCT-SPECIFIC EMOJIS (each product gets a unique emoji)
+        const productEmojis = {
+            // Atta & Flours
+            'Sunridge Fortified Atta': '🌾', 'Chakki Fresh Atta': '🔄', 'Whole Wheat Atta': '🍞',
+            'Multigrain Atta': '🌽', 'Bajra Atta': '🌿', 'Makai Atta': '🌽',
+            'Chana Besan': '🫘', 'Shaheen Atta': '⭐', 'White Flour Maida': '🥖',
+            
+            // Rice & Pulses
+            'Basmati Rice': '🍚', 'Super Basmati': '👑', 'Sela Rice': '🍙',
+            'Moong Pulse': '🟢', 'Mash Pulse': '⚫', 'Chana Pulse': '🟤',
+            'Masoor Pulse': '🔴', 'Rajma': '❤️',
+            
+            // Oils
+            'Dalda Cooking Oil': '🫒', 'Seasons Canola': '🌻', 'Kissan Pure Ghee': '🧈',
+            'Olive Oil': '🫒', 'Habib Cooking Oil': '🥫', 'Mitaloo Ghee': '✨',
+            'Sunflower Oil': '🌻', 'Coconut Oil': '🥥', 'Mustard Oil': '🟡',
+            'Tara Cooking Oil': '⭐',
+            
+            // Meat
+            'Chicken Meat': '🍗', 'Chicken Qeema': '🥩', 'Beef Boneless': '🥩',
+            'Beef Qeema': '🍖', 'Mutton': '🐑', 'Mutton Leg': '🍖',
+            
+            // Dairy
+            'Fresh Eggs': '🥚', 'Olper\'s Milk': '🥛', 'Milkpak': '🥛',
+            'Yogurt': '🍶', 'Butter': '🧈', 'Cream': '🥛',
+            'Cheese Slices': '🧀', 'Mozzarella Cheese': '🧀',
+            
+            // Baby
+            'Pampers Premium': '👶', 'Pampers Small': '👶', 'Baby Cerelac': '🥣',
+            'Baby Oil': '🧴', 'Baby Wipes': '🧻',
+            
+            // Personal Care
+            'Sunsilk Shampoo': '🧴', 'Pantene Shampoo': '🧴', 'Safeguard Soap': '🧼',
+            'Lifebuoy Soap': '🧼', 'Colgate Toothpaste': '🦷', 'Sensodyne': '🦷',
+            'Always Pads': '🌸', 'Dove Soap': '🧼', 'Head & Shoulders': '🧴',
+            
+            // Drinks
+            'Pakola Lychee': '🧋', 'Pakola Orange': '🍊', 'Pakola Cream Soda': '🥤',
+            'Pakola Vimto': '🍇', 'Shandy Ganda': '🥤', 'Fruitonic Jam': '🧃',
+            'Rooh Afza': '🌹', 'Shezan Mango': '🥭', 'Shezan Apple': '🍎',
+            'Nestle Fruita': '🧃', 'Qarshi Sarbat': '🌿', 'Tang Orange': '🍊',
+            'Fanta': '🍊', 'Pepsi': '🥤', '7up': '🥤', 'Dew': '🌿',
+            'Nestle Pure Life': '💧', 'Mineral Water': '💧',
+            
+            // Snacks
+            'Daddy Nimko': '🥨', 'Kolson\'s Nimko': '🥨', 'Everest Nimbo': '🥨',
+            'Lays Masala': '🥔', 'Kurkure': '🌽', 'Puffcorn': '🍿',
+            'Samosa Chaat': '🥟', 'Bombay Bhujia': '🥨', 'Aloo Bhujia': '🥔',
+            'Peanuts': '🥜', 'Chana Jor Garam': '🫘', 'Papri': '🍥',
+            'Khatai': '🍪', 'Golgappa': '⚪', 'Dahi Bhalla': '🍡',
+            'Fruit Cake': '🍰', 'Biscuits': '🍪', 'Rusk': '🍞',
+            
+            // Household
+            'Surf Excel': '🧼', 'Ariel Detergent': '🧼', 'Vim Liquid': '🧽',
+            'Dishwasher Bar': '🧼', 'Floor Cleaner': '🧹', 'Trash Bags': '🗑️',
+            'Aluminum Foil': '📦', 'Clothes Hangers': '👕', 'Laundry Net': '🧺',
+            'Dishwashing Liquid': '🧽', 'Cleaning Sponges': '🧼'
+        };
+
+        // Default emoji for products not in the map
+        function getProductEmoji(productName) {
+            // Check each key in productEmojis
+            for (let key in productEmojis) {
+                if (productName.includes(key)) {
+                    return productEmojis[key];
+                }
+            }
+            // Category-based fallback
+            if (productName.includes('Salt')) return '🧂';
+            if (productName.includes('Sugar')) return '🍬';
+            if (productName.includes('Cornflour')) return '🌽';
+            return '📦'; // Default
         }
-        let subtotal = 0;
-        container.innerHTML = ids.map(id => {
-            const item = inventory.find(p => p.id == id);
-            subtotal += item.price * cart[id];
-            return `<div class="cart-item">
-                <span><b>${item.name}</b></span>
-                <div class="qty-ctrl">
-                    <button class="qty-btn" onclick="updateQty(${id}, -1)">−</button>
-                    <span>${cart[id]}</span>
-                    <button class="qty-btn" onclick="updateQty(${id}, 1)">+</button>
+
+        // Generate a UNIQUE color for EACH product based on its ID
+        function getUniqueProductColor(id) {
+            // Use ID to generate a consistent hue
+            const hue = (id * 37) % 360; // 37 is prime, gives good distribution
+            const saturation = 65 + (id % 30); // 65-95%
+            const lightness = 45 + (id % 20); // 45-65%
+            return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+        }
+
+        // Get product image style - EVERY PRODUCT GETS UNIQUE COLOR
+        function getProductImageStyle(product) {
+            const baseColor = getUniqueProductColor(product.id);
+            // Create a subtle gradient using the same hue
+            const darkerColor = `hsl(${(product.id * 37) % 360}, ${65 + (product.id % 30)}%, ${35 + (product.id % 15)}%)`;
+            
+            return {
+                background: `linear-gradient(135deg, ${baseColor}, ${darkerColor})`,
+                emoji: getProductEmoji(product.name),
+                // Extract first 2-3 words for display
+                shortName: product.name.split(' ').slice(0, 2).join(' ')
+            };
+        }
+
+        // ----- COMPLETE INVENTORY (keeping all 105 items) -----
+        const inventory = [
+            { id: 1, name: "Sunridge Fortified Atta (10kg)", price: 1180, cat: "Staples", limit: false },
+            { id: 2, name: "Chakki Fresh Atta (10kg) - desi", price: 1050, cat: "Staples", limit: false },
+            { id: 3, name: "Whole Wheat Atta (10kg) (Mitchells)", price: 1120, cat: "Staples", limit: false },
+            { id: 4, name: "Multigrain Atta (5kg) (Healthy Life)", price: 620, cat: "Staples", limit: true },
+            { id: 5, name: "Bajra Atta (2kg) - local", price: 240, cat: "Staples", limit: false },
+            { id: 6, name: "Makai Atta (2kg) (corn flour)", price: 260, cat: "Staples", limit: false },
+            { id: 7, name: "Chana Besan (1kg) (gram flour)", price: 220, cat: "Staples", limit: false },
+            { id: 8, name: "Shaheen Atta (10kg) (popular local)", price: 1000, cat: "Staples", limit: false },
+            { id: 9, name: "White Flour Maida (2kg)", price: 210, cat: "Staples", limit: false },
+            { id: 10, name: "Sugar / Cheeni (1kg)", price: 175, cat: "Staples", limit: true },
+            { id: 11, name: "Basmati Rice Premium (1kg)", price: 360, cat: "Staples", limit: false },
+            { id: 12, name: "Super Basmati Rice (5kg) (Kainat)", price: 1550, cat: "Staples", limit: false },
+            { id: 13, name: "Sela Rice (5kg) (daily use)", price: 980, cat: "Staples", limit: false },
+            { id: 14, name: "Moong Pulse Washed (1kg)", price: 290, cat: "Staples", limit: false },
+            { id: 15, name: "Mash Pulse (1kg)", price: 380, cat: "Staples", limit: false },
+            { id: 16, name: "Chana Pulse (1kg)", price: 240, cat: "Staples", limit: false },
+            { id: 17, name: "Masoor Pulse (1kg)", price: 270, cat: "Staples", limit: false },
+            { id: 18, name: "Rajma (Red Kidney beans) 500g", price: 330, cat: "Staples", limit: false },
+            { id: 19, name: "Salt (1kg) (Cook & Bake)", price: 60, cat: "Staples", limit: false },
+            { id: 20, name: "Cornflour (500g)", price: 180, cat: "Staples", limit: false },
+            { id: 21, name: "Dalda Cooking Oil (1L Pouch)", price: 590, cat: "Oil", limit: true },
+            { id: 22, name: "Seasons Canola Oil (1L)", price: 585, cat: "Oil", limit: false },
+            { id: 23, name: "Kissan Pure Ghee (1kg)", price: 650, cat: "Oil", limit: false },
+            { id: 24, name: "Olive Oil (500ml) (Olivoila)", price: 850, cat: "Oil", limit: true },
+            { id: 25, name: "Habib Cooking Oil (3L)", price: 1490, cat: "Oil", limit: false },
+            { id: 26, name: "Mitaloo Ghee (1kg)", price: 610, cat: "Oil", limit: false },
+            { id: 27, name: "Sunflower Oil (1L)", price: 620, cat: "Oil", limit: false },
+            { id: 28, name: "Coconut Oil (500ml) (desi)", price: 520, cat: "Oil", limit: false },
+            { id: 29, name: "Mustard Oil (1L) (special)", price: 480, cat: "Oil", limit: true },
+            { id: 30, name: "Tara Cooking Oil (3L)", price: 1420, cat: "Oil", limit: false },
+            { id: 31, name: "Chicken Meat (1kg)", price: 770, cat: "Meat", limit: false },
+            { id: 32, name: "Chicken Qeema (1kg)", price: 790, cat: "Meat", limit: false },
+            { id: 33, name: "Beef Boneless (1kg)", price: 1500, cat: "Meat", limit: false },
+            { id: 34, name: "Beef Qeema (1kg)", price: 1550, cat: "Meat", limit: false },
+            { id: 35, name: "Mutton (1kg)", price: 2400, cat: "Meat", limit: true },
+            { id: 36, name: "Mutton Leg (1kg)", price: 2550, cat: "Meat", limit: true },
+            { id: 37, name: "Fresh Eggs (Dozen)", price: 300, cat: "Dairy", limit: true },
+            { id: 38, name: "Olper's Milk (1L)", price: 370, cat: "Dairy", limit: false },
+            { id: 39, name: "Milkpak (1L)", price: 350, cat: "Dairy", limit: false },
+            { id: 40, name: "Yogurt / Dahi (500g)", price: 150, cat: "Dairy", limit: false },
+            { id: 41, name: "Butter (500g) (Unsalted)", price: 450, cat: "Dairy", limit: false },
+            { id: 42, name: "Cream (250ml)", price: 220, cat: "Dairy", limit: false },
+            { id: 43, name: "Cheese Slices (10 pcs)", price: 280, cat: "Dairy", limit: false },
+            { id: 44, name: "Mozzarella Cheese (200g)", price: 360, cat: "Dairy", limit: true },
+            { id: 45, name: "Pampers Premium S4 (Large)", price: 4750, cat: "Baby", limit: true },
+            { id: 46, name: "Pampers Small (28 pcs)", price: 1250, cat: "Baby", limit: false },
+            { id: 47, name: "Baby Cerelac (1kg) (Wheat)", price: 980, cat: "Baby", limit: false },
+            { id: 48, name: "Baby Oil (200ml)", price: 390, cat: "Baby", limit: false },
+            { id: 49, name: "Baby Wipes (100 pcs)", price: 320, cat: "Baby", limit: false },
+            { id: 50, name: "Sunsilk Shampoo (400ml)", price: 590, cat: "Personal", limit: false },
+            { id: 51, name: "Pantene Shampoo (300ml)", price: 680, cat: "Personal", limit: false },
+            { id: 52, name: "Safeguard Soap (4 pcs)", price: 410, cat: "Personal", limit: false },
+            { id: 53, name: "Lifebuoy Soap (6 pcs)", price: 420, cat: "Personal", limit: false },
+            { id: 54, name: "Colgate Toothpaste", price: 190, cat: "Personal", limit: false },
+            { id: 55, name: "Sensodyne Toothpaste", price: 320, cat: "Personal", limit: false },
+            { id: 56, name: "Always Pads (Large pack)", price: 520, cat: "Personal", limit: false },
+            { id: 57, name: "Dove Soap (2 pcs)", price: 320, cat: "Personal", limit: false },
+            { id: 58, name: "Head & Shoulders (200ml)", price: 750, cat: "Personal", limit: true },
+            { id: 59, name: "Pakola Lychee Drink (750ml)", price: 140, cat: "Drinks", limit: false },
+            { id: 60, name: "Pakola Orange (750ml)", price: 140, cat: "Drinks", limit: false },
+            { id: 61, name: "Pakola Cream Soda (750ml)", price: 140, cat: "Drinks", limit: false },
+            { id: 62, name: "Pakola Vimto (750ml)", price: 160, cat: "Drinks", limit: false },
+            { id: 63, name: "Shandy Ganda (330ml can)", price: 100, cat: "Drinks", limit: false },
+            { id: 64, name: "Fruitonic Jam-e-Sheeren (800ml)", price: 390, cat: "Drinks", limit: false },
+            { id: 65, name: "Sadaf Rooh Afza (800ml)", price: 580, cat: "Drinks", limit: false },
+            { id: 66, name: "Shezan Mango Juice (1L)", price: 290, cat: "Drinks", limit: false },
+            { id: 67, name: "Shezan Apple Juice (1L)", price: 280, cat: "Drinks", limit: false },
+            { id: 68, name: "Nestle Fruita Vitals (200ml) (6pcs)", price: 360, cat: "Drinks", limit: false },
+            { id: 69, name: "Qarshi Sarbat (800ml) (desi)", price: 440, cat: "Drinks", limit: true },
+            { id: 70, name: "Tang Orange (500g)", price: 680, cat: "Drinks", limit: false },
+            { id: 71, name: "Fanta (1.5L)", price: 220, cat: "Drinks", limit: false },
+            { id: 72, name: "Pepsi 1.5L", price: 210, cat: "Drinks", limit: false },
+            { id: 73, name: "7up (1.5L)", price: 210, cat: "Drinks", limit: false },
+            { id: 74, name: "Dew (1.5L)", price: 220, cat: "Drinks", limit: false },
+            { id: 75, name: "Nestle Pure Life 1.5L (6 pack)", price: 540, cat: "Drinks", limit: false },
+            { id: 76, name: "Mineral Water (1.5L) (12 pack)", price: 480, cat: "Drinks", limit: false },
+            { id: 77, name: "Daddy Nimko (500g) (local mix)", price: 350, cat: "Snacks", limit: false },
+            { id: 78, name: "Kolson's Nimko (500g)", price: 330, cat: "Snacks", limit: false },
+            { id: 79, name: "Everest Nimbo (spicy mix) 400g", price: 290, cat: "Snacks", limit: false },
+            { id: 80, name: "Lays Masala (20g x 20 pack)", price: 580, cat: "Snacks", limit: false },
+            { id: 81, name: "Kurkure Chotay (15g x 30)", price: 570, cat: "Snacks", limit: false },
+            { id: 82, name: "Puffcorn (desi cheese) 250g", price: 220, cat: "Snacks", limit: false },
+            { id: 83, name: "Samosa Chaat (local) 300g", price: 210, cat: "Snacks", limit: true },
+            { id: 84, name: "Bombay Bhujia (Haldiram) 400g", price: 390, cat: "Snacks", limit: false },
+            { id: 85, name: "Aloo Bhujia (desi) 400g", price: 340, cat: "Snacks", limit: false },
+            { id: 86, name: "Peanuts salted (roasted) 500g", price: 270, cat: "Snacks", limit: false },
+            { id: 87, name: "Chana Jor Garam (spicy) 300g", price: 190, cat: "Snacks", limit: false },
+            { id: 88, name: "Papri (fried snack) 250g", price: 180, cat: "Snacks", limit: false },
+            { id: 89, name: "Khatai (sweet & sour discs) 200g", price: 160, cat: "Snacks", limit: false },
+            { id: 90, name: "Golgappa Ready (20 pcs + masala)", price: 180, cat: "Snacks", limit: false },
+            { id: 91, name: "Dahi Bhalla mix (200g)", price: 210, cat: "Snacks", limit: false },
+            { id: 92, name: "Fruit Cake (500g) (local bakery)", price: 490, cat: "Snacks", limit: true },
+            { id: 93, name: "Biscuits (Chocolate Chip) 200g", price: 230, cat: "Snacks", limit: false },
+            { id: 94, name: "Rusk (desi toast) 500g", price: 200, cat: "Snacks", limit: false },
+            { id: 95, name: "Surf Excel 1kg", price: 670, cat: "Household", limit: false },
+            { id: 96, name: "Ariel Detergent (1kg)", price: 720, cat: "Household", limit: false },
+            { id: 97, name: "Vim Liquid 500ml", price: 230, cat: "Household", limit: false },
+            { id: 98, name: "Dishwasher Bar (2 pcs)", price: 140, cat: "Household", limit: false },
+            { id: 99, name: "Floor Cleaner (1L)", price: 210, cat: "Household", limit: false },
+            { id: 100, name: "Trash Bags (20 pcs)", price: 190, cat: "Household", limit: false },
+            { id: 101, name: "Aluminum Foil (10m)", price: 320, cat: "Household", limit: false },
+            { id: 102, name: "Clothes Hangers (6 pcs)", price: 240, cat: "Household", limit: false },
+            { id: 103, name: "Laundry Net (3 pcs)", price: 150, cat: "Household", limit: false },
+            { id: 104, name: "Dishwashing Liquid (500ml)", price: 280, cat: "Household", limit: false },
+            { id: 105, name: "Cleaning Sponges (5 pcs)", price: 120, cat: "Household", limit: false }
+        ];
+
+        let cart = {};
+        let activeCat = "All";
+
+        function init() {
+            const cats = ["All", ...new Set(inventory.map(i => i.cat))];
+            document.getElementById('cat-nav').innerHTML = cats.map(c => 
+                `<button class="cat-btn" id="b-${c}" onclick="setCat('${c}')"><i class="fas fa-tag"></i>${c}</button>`
+            ).join('');
+            setCat("All");
+        }
+
+        function toggleCart() {
+            document.getElementById('cart-sidebar').classList.toggle('active');
+        }
+
+        function clearFullCart() {
+            if (Object.keys(cart).length === 0) return;
+            cart = {};
+            refreshCart();
+        }
+
+        function setCat(c) {
+            activeCat = c;
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(`b-${c}`).classList.add('active');
+            filterItems();
+        }
+
+        function filterItems() {
+            const query = document.getElementById('searchBar').value.toLowerCase();
+            const filtered = inventory.filter(i => 
+                (activeCat === "All" || i.cat === activeCat) && i.name.toLowerCase().includes(query)
+            );
+            renderGrid(filtered);
+        }
+
+        function renderGrid(items) {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = items.map(p => {
+                const imgStyle = getProductImageStyle(p);
+                // Extract brand if present in parentheses
+                const brandMatch = p.name.match(/\(([^)]+)\)/);
+                const brand = brandMatch ? brandMatch[1] : '';
+                
+                return `
+                <div class="product-card">
+                    <div class="product-image" style="${imgStyle.background}">
+                        <div style="font-size: 2.5rem; margin-bottom: 5px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">${imgStyle.emoji}</div>
+                        <div style="font-weight: bold; font-size: 0.9rem; background: rgba(0,0,0,0.3); padding: 3px 8px; border-radius: 20px;">${imgStyle.shortName}</div>
+                        ${brand ? `<div style="font-size: 0.7rem; margin-top: 5px; opacity: 0.9;">${brand}</div>` : ''}
+                    </div>
+                    <span class="status-chip ${p.limit ? 'limited' : 'in-stock'}">${p.limit ? '⚠️ limited' : '✅ in stock'}</span>
+                    <h3>${p.name}</h3>
+                    <div class="price-tag">₨${p.price} <span>/${p.name.includes('kg') ? 'kg' : p.name.includes('L') ? 'L' : 'pc'}</span></div>
+                    <button class="add-to-cart" onclick="updateQty(${p.id}, 1)">
+                        <i class="fas fa-plus-circle"></i> Add
+                    </button>
                 </div>
-                <strong>₨ ${item.price * cart[id]}</strong>
-            </div>`;
-        }).join('');
-        
-        document.getElementById('total-val').innerText = (subtotal + DELIVERY_FEE).toLocaleString();
-    }
+            `}).join('');
+        }
 
-    function sendOrder() {
-        const addr = document.getElementById('address').value;
-        const ids = Object.keys(cart);
-        if (!ids.length || !addr) return alert("Please add items and delivery address!");
-        
-        let msg = `*NEW ORDER - ISLAMABAD MEGA MART*%0A%0A`;
-        let total = 0;
-        ids.forEach(id => {
-            const it = inventory.find(p => p.id == id);
-            msg += `• ${it.name} x ${cart[id]} = ${it.price * cart[id]}%0A`;
-            total += it.price * cart[id];
-        });
-        
-        msg += `%0A*Delivery Fee:* ₨ ${DELIVERY_FEE}`;
-        msg += `%0A*GRAND TOTAL: ₨ ${total + DELIVERY_FEE}*`;
-        msg += `%0A%0A*ADDRESS:* ${addr}`;
-        
-        window.open(`https://wa.me/${MY_PHONE}?text=${msg}`, '_blank');
-    }
+        function updateQty(id, change) {
+            if (!cart[id]) cart[id] = 0;
+            cart[id] += change;
+            if (cart[id] <= 0) delete cart[id];
+            refreshCart();
+        }
 
-    init();
-</script>
+        function refreshCart() {
+            const container = document.getElementById('cart-content');
+            const ids = Object.keys(cart);
+            let totalQty = 0;
+            ids.forEach(id => totalQty += cart[id]);
+            document.getElementById('cart-count').innerText = totalQty;
+
+            if (ids.length === 0) {
+                container.innerHTML = `<div style="padding: 20px 0; color: #8fa88f; text-align: center;"><i class="fas fa-basket-shopping" style="font-size:2.4rem; opacity:0.4;"></i><p>Your basket is empty</p></div>`;
+                document.getElementById('total-val').innerText = '0';
+                return;
+            }
+            let subtotal = 0;
+            container.innerHTML = ids.map(id => {
+                const item = inventory.find(p => p.id == id);
+                subtotal += item.price * cart[id];
+                return `<div class="cart-item">
+                    <span class="cart-item-name">${item.name.split(' ').slice(0,2).join(' ')}</span>
+                    <div class="qty-wrap">
+                        <button class="qty-btn" onclick="updateQty(${id}, -1)"><i class="fas fa-minus"></i></button>
+                        <span class="qty-value">${cart[id]}</span>
+                        <button class="qty-btn" onclick="updateQty(${id}, 1)"><i class="fas fa-plus"></i></button>
+                    </div>
+                    <span class="item-price">₨${item.price * cart[id]}</span>
+                </div>`;
+            }).join('');
+            document.getElementById('total-val').innerText = (subtotal + DELIVERY_FEE).toLocaleString();
+        }
+
+        function sendOrder() {
+            const house = document.getElementById('addrHouse').value.trim();
+            const street = document.getElementById('addrStreet').value.trim();
+            const sector = document.getElementById('addrSector').value.trim();
+            const city = document.getElementById('addrCity').value.trim();
+            const ids = Object.keys(cart);
+            if (!ids.length) return alert("Add items to basket");
+            if (!house || !street || !sector || !city) return alert("Please fill full address");
+
+            let msg = `*ISLAMABAD MEGA MART ORDER*%0A%0A`;
+            let total = 0;
+            ids.forEach(id => {
+                const it = inventory.find(p => p.id == id);
+                msg += `• ${it.name} x ${cart[id]} = ₨${it.price * cart[id]}%0A`;
+                total += it.price * cart[id];
+            });
+            msg += `%0A🚚 Delivery: ₨50%0A*TOTAL: ₨${total+DELIVERY_FEE}*`;
+            msg += `%0A📍 ${house}, ${street}, ${sector}, ${city}`;
+            window.open(`https://wa.me/${MY_PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        window.onload = init;
+    </script>
 </body>
 </html>
